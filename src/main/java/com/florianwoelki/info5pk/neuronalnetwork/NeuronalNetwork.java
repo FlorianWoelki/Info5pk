@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class NeuronalNetwork {
 
-    private boolean isFullMeshedGenerated;
+    private boolean isFullyMeshedGenerated;
 
     private List<InputNeuron> inputNeurons = new ArrayList<>();
     private List<WorkingNeuron> hiddenNeurons = new ArrayList<>();
@@ -43,7 +43,7 @@ public class NeuronalNetwork {
     }
 
     public void generateFullMesh() {
-        isFullMeshedGenerated = true;
+        isFullyMeshedGenerated = true;
 
         for ( WorkingNeuron hiddenNeuron : hiddenNeurons ) {
             for ( InputNeuron inputNeuron : inputNeurons ) {
@@ -62,9 +62,9 @@ public class NeuronalNetwork {
         return outputNeurons.get( index );
     }
 
-    public NeuronalNetwork cloneFullMesh() throws NNNotFullMeshedException, NotSameAmountOfNeuronsException {
-        if ( !isFullMeshedGenerated ) {
-            throw new NNNotFullMeshedException( "The Neuronal Network is not full meshed generated." );
+    public NeuronalNetwork cloneFullMesh() throws NNNotFullyMeshedException, NotSameAmountOfNeuronsException {
+        if ( !isFullyMeshedGenerated ) {
+            throw new NNNotFullyMeshedException( "The Neuronal Network is not fully meshed generated." );
         }
 
         NeuronalNetwork copy = new NeuronalNetwork();
