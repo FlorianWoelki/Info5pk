@@ -8,6 +8,8 @@ import java.util.List;
  */
 public class NeuronalNetwork {
 
+    private boolean isFullMeshedGenerated;
+
     private List<InputNeuron> inputNeurons = new ArrayList<>();
     private List<WorkingNeuron> hiddenNeurons = new ArrayList<>();
     private List<WorkingNeuron> outputNeurons = new ArrayList<>();
@@ -41,6 +43,8 @@ public class NeuronalNetwork {
     }
 
     public void generateFullMesh() {
+        isFullMeshedGenerated = true;
+
         for ( WorkingNeuron hiddenNeuron : hiddenNeurons ) {
             for ( InputNeuron inputNeuron : inputNeurons ) {
                 hiddenNeuron.addNeuronConnection( inputNeuron, 1 );
@@ -58,7 +62,11 @@ public class NeuronalNetwork {
         return outputNeurons.get( index );
     }
 
-    public NeuronalNetwork cloneFullMesh() {
+    public NeuronalNetwork cloneFullMesh() throws NNNotFullMeshedException, NotSameAmountOfNeuronsException {
+        if ( !isFullMeshedGenerated ) {
+            throw new NNNotFullMeshedException( "The Neuronal Network is not full meshed generated." );
+        }
+
         NeuronalNetwork copy = new NeuronalNetwork();
 
         for ( InputNeuron inputNeuron : inputNeurons ) {
@@ -79,7 +87,7 @@ public class NeuronalNetwork {
             List<Connection> connectionsOriginal = hiddenNeurons.get( i ).getConnections();
             List<Connection> connectionsCopy = copy.hiddenNeurons.get( i ).getConnections();
             if ( connectionsOriginal.size() != connectionsCopy.size() ) {
-                return null;
+                throw new NotSameAmountOfNeuronsException( "Cloning the hidden neurons was not successful. Because both has not the same size." );
             }
 
             for ( int k = 0; k < connectionsOriginal.size(); k++ ) {
@@ -91,7 +99,7 @@ public class NeuronalNetwork {
             List<Connection> connectionsOriginal = outputNeurons.get( i ).getConnections();
             List<Connection> connectionsCopy = copy.outputNeurons.get( i ).getConnections();
             if ( connectionsOriginal.size() != connectionsCopy.size() ) {
-                return null;
+                throw new NotSameAmountOfNeuronsException( "Cloning the hidden neurons was not successful. Because both has not the same size." );
             }
 
             for ( int k = 0; k < connectionsOriginal.size(); k++ ) {
