@@ -3,6 +3,7 @@ package com.florianwoelki.info5pk;
 import com.florianwoelki.info5pk.creature.CreatureFactory;
 import com.florianwoelki.info5pk.creature.TestCreature;
 import com.florianwoelki.info5pk.input.Keyboard;
+import com.florianwoelki.info5pk.input.Mouse;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -15,16 +16,20 @@ public class Game extends Canvas implements Runnable {
     private Window window;
     private CreatureFactory creatureFactory;
     private Keyboard keyboard;
+    private Mouse mouse;
 
     private Thread thread;
     private boolean isRunning;
 
     public Game() {
         keyboard = new Keyboard();
+        mouse = new Mouse();
 
         requestFocus();
         setFocusable( true );
         addKeyListener( keyboard );
+        addMouseListener( mouse );
+        addMouseMotionListener( mouse );
 
         window = new Window( this );
         window.setVisible( true );
