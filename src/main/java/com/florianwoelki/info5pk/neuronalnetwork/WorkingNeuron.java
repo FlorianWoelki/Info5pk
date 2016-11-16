@@ -1,5 +1,7 @@
 package com.florianwoelki.info5pk.neuronalnetwork;
 
+import com.florianwoelki.info5pk.math.MathUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +37,7 @@ public class WorkingNeuron extends Neuron {
             value += connection.getValue();
         }
 
-        value = Neuron.sigmoid( value );
+        value = MathUtil.sigmoid( value );
         this.value = value;
     }
 
