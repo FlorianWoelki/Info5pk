@@ -32,6 +32,16 @@ public class NeuronalNetwork {
         }
     }
 
+    public void invalidate() {
+        for ( WorkingNeuron wn : hiddenNeurons ) {
+            wn.invalidate();
+        }
+
+        for ( WorkingNeuron wn : outputNeurons ) {
+            wn.invalidate();
+        }
+    }
+
     public void randomizeAllWeights() {
         for ( WorkingNeuron hiddenNeuron : hiddenNeurons ) {
             hiddenNeuron.randomizeWeights();
@@ -58,8 +68,35 @@ public class NeuronalNetwork {
         }
     }
 
+    public InputNeuron getInputNeuronFromName(String name) {
+        for ( InputNeuron neuron : inputNeurons ) {
+            if ( name == neuron.getName() ) {
+                return neuron;
+            }
+        }
+        return null;
+    }
+
+    public WorkingNeuron getHiddenNeuronFromName(String name) {
+        for ( WorkingNeuron neuron : hiddenNeurons ) {
+            if ( name == neuron.getName() ) {
+                return neuron;
+            }
+        }
+        return null;
+    }
+
     public WorkingNeuron getOutputNeuronFromIndex(int index) {
         return outputNeurons.get( index );
+    }
+
+    public WorkingNeuron getOutputNeuronFromName(String name) {
+        for ( WorkingNeuron neuron : outputNeurons ) {
+            if ( name == neuron.getName() ) {
+                return neuron;
+            }
+        }
+        return null;
     }
 
     public NeuronalNetwork cloneFullMesh() throws NNNotFullyMeshedException, NotSameAmountOfNeuronsException {
