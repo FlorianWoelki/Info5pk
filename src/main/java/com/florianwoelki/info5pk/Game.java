@@ -1,5 +1,8 @@
 package com.florianwoelki.info5pk;
 
+import com.florianwoelki.info5pk.creature.CreatureFactory;
+import com.florianwoelki.info5pk.creature.TestCreature;
+
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
@@ -13,9 +16,16 @@ public class Game extends Canvas implements Runnable {
     private Thread thread;
     private boolean isRunning;
 
+    private CreatureFactory creatureFactory;
+
     public Game() {
         window = new Window( this );
         window.setVisible( true );
+
+        creatureFactory = new CreatureFactory();
+        for ( int i = 0; i < 5; i++ ) {
+            creatureFactory.addCreature( new TestCreature( (float) (Math.random() * getWidth() - 8), (float) (Math.random() * getHeight() - 8) ) );
+        }
     }
 
     private synchronized void start() {
@@ -70,7 +80,7 @@ public class Game extends Canvas implements Runnable {
     }
 
     private void update() {
-
+        creatureFactory.update();
     }
 
     private void render() {
@@ -83,6 +93,7 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         g.setColor( Color.BLACK );
         g.fillRect( 0, 0, getWidth(), getHeight() );
+        creatureFactory.render( g );
         g.dispose();
         bs.show();
     }
