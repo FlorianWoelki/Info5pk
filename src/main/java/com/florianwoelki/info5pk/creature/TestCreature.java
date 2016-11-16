@@ -13,16 +13,17 @@ public class TestCreature extends Creature {
 
     @Override
     public void update() {
+        int anim1 = (int) (Math.sin( System.currentTimeMillis() % 1000.0 / 1000 * Math.PI * 2 ) * 3);
+        int anim2 = (int) (Math.cos( System.currentTimeMillis() % 1000.0 / 1000 * Math.PI * 2 ) * 3);
 
+        x += anim1;
+        y += anim2;
     }
 
     @Override
     public void render(Graphics g) {
-        int anim1 = (int) (Math.sin( System.currentTimeMillis() % 2000.0 / 2000 * Math.PI * 2 ) * 20);
-        int anim2 = (int) (Math.cos( System.currentTimeMillis() % 2000.0 / 2000 * Math.PI * 2 ) * 20);
-
         g.setColor( Color.WHITE );
-        g.fillRect( (int) x + anim1, (int) y + anim2, SIZE, SIZE );
+        g.fillRect( (int) x, (int) y, SIZE, SIZE );
     }
 
 }
