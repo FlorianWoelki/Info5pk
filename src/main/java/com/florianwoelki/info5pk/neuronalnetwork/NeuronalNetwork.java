@@ -54,4 +54,52 @@ public class NeuronalNetwork {
         }
     }
 
+    public WorkingNeuron getOutputNeuronFromIndex(int index) {
+        return outputNeurons.get( index );
+    }
+
+    public NeuronalNetwork cloneFullMesh() {
+        NeuronalNetwork copy = new NeuronalNetwork();
+
+        for ( InputNeuron inputNeuron : inputNeurons ) {
+            copy.addInputNeuron( (InputNeuron) inputNeuron.nameCopy() );
+        }
+
+        for ( WorkingNeuron hiddenNeuron : hiddenNeurons ) {
+            copy.addHiddenNeuron( (WorkingNeuron) hiddenNeuron.nameCopy() );
+        }
+
+        for ( WorkingNeuron outputNeuron : outputNeurons ) {
+            copy.addOutputNeuron( (WorkingNeuron) outputNeuron.nameCopy() );
+        }
+
+        copy.generateFullMesh();
+
+        for ( int i = 0; i < hiddenNeurons.size(); i++ ) {
+            List<Connection> connectionsOriginal = hiddenNeurons.get( i ).getConnections();
+            List<Connection> connectionsCopy = copy.hiddenNeurons.get( i ).getConnections();
+            if ( connectionsOriginal.size() != connectionsCopy.size() ) {
+                return null;
+            }
+
+            for ( int k = 0; k < connectionsOriginal.size(); k++ ) {
+                connectionsCopy.get( k ).weight = connectionsOriginal.get( k ).weight;
+            }
+        }
+
+        for ( int i = 0; i < outputNeurons.size(); i++ ) {
+            List<Connection> connectionsOriginal = outputNeurons.get( i ).getConnections();
+            List<Connection> connectionsCopy = copy.outputNeurons.get( i ).getConnections();
+            if ( connectionsOriginal.size() != connectionsCopy.size() ) {
+                return null;
+            }
+
+            for ( int k = 0; k < connectionsOriginal.size(); k++ ) {
+                connectionsCopy.get( k ).weight = connectionsOriginal.get( k ).weight;
+            }
+        }
+
+        return copy;
+    }
+
 }

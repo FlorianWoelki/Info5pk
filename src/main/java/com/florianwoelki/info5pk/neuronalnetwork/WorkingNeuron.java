@@ -49,4 +49,14 @@ public class WorkingNeuron extends Neuron {
         return value;
     }
 
+    @Override
+    public Neuron nameCopy() {
+        WorkingNeuron clone = new WorkingNeuron();
+        clone.setName( getName() );
+        return clone;
+    }
+
+    public List<Connection> getConnections() {
+        return connections;
+    }
 }

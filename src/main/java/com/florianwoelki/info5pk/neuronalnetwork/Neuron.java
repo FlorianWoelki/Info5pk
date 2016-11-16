@@ -5,6 +5,18 @@ package com.florianwoelki.info5pk.neuronalnetwork;
  */
 public abstract class Neuron {
 
+    private String name = "no name";
+
     public abstract float getValue();
+
+    public abstract Neuron nameCopy();
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
 }

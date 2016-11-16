@@ -15,4 +15,11 @@ public class InputNeuron extends Neuron {
     public float getValue() {
         return value;
     }
+
+    @Override
+    public Neuron nameCopy() {
+        InputNeuron clone = new InputNeuron();
+        clone.setName( getName() );
+        return clone;
+    }
 }
