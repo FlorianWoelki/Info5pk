@@ -5,6 +5,38 @@ package com.florianwoelki.info5pk.math;
  */
 public class MathUtil {
 
+    public final float PI = 3.1415926535f;
+    public final float DEGREETORAD = PI / 180.0f;
+    public final float RADTODEGREE = 180.0f / PI;
+
+    public static float abs(float value) {
+        return Math.abs( value );
+    }
+
+    public static float sin(float value) {
+        return (float) Math.sin( value );
+    }
+
+    public static float cos(float value) {
+        return (float) Math.cos( value );
+    }
+
+    public static float tan(float value) {
+        return (float) Math.tan( value );
+    }
+
+    public static float asin(float value) {
+        return (float) Math.asin( value );
+    }
+
+    public static float acos(float value) {
+        return (float) Math.acos( value );
+    }
+
+    public static float atan(float value) {
+        return (float) Math.atan( value );
+    }
+
     public static float sigmoid(float x) {
         float et = (float) Math.pow( Math.E, x );
         return et / (1 + et);
