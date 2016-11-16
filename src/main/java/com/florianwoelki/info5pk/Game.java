@@ -2,6 +2,7 @@ package com.florianwoelki.info5pk;
 
 import com.florianwoelki.info5pk.creature.CreatureFactory;
 import com.florianwoelki.info5pk.creature.TestCreature;
+import com.florianwoelki.info5pk.input.Keyboard;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -12,13 +13,19 @@ import java.awt.image.BufferStrategy;
 public class Game extends Canvas implements Runnable {
 
     private Window window;
+    private CreatureFactory creatureFactory;
+    private Keyboard keyboard;
 
     private Thread thread;
     private boolean isRunning;
 
-    private CreatureFactory creatureFactory;
-
     public Game() {
+        keyboard = new Keyboard();
+
+        requestFocus();
+        setFocusable( true );
+        addKeyListener( keyboard );
+
         window = new Window( this );
         window.setVisible( true );
 
@@ -91,6 +98,7 @@ public class Game extends Canvas implements Runnable {
 
     private void update() {
         creatureFactory.update();
+        keyboard.update();
     }
 
     private void render() {
