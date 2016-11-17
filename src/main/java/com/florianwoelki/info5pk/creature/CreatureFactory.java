@@ -9,6 +9,15 @@ import java.util.List;
  */
 public class CreatureFactory {
 
+    private static CreatureFactory instance;
+
+    public static CreatureFactory getInstance() {
+        if ( instance == null ) {
+            instance = new CreatureFactory();
+        }
+        return instance;
+    }
+
     private List<Creature> creatures;
 
     public CreatureFactory() {

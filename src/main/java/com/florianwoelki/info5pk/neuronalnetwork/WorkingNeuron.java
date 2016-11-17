@@ -4,6 +4,7 @@ import com.florianwoelki.info5pk.math.MathUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Florian Woelki on 16.11.16.
@@ -12,6 +13,8 @@ public class WorkingNeuron extends Neuron {
 
     private float value;
     private List<Connection> connections = new ArrayList<>();
+
+    private Random random = new Random();
 
     public void addNeuronConnection(Neuron neuron, float weight) {
         addNeuronConnection( new Connection( neuron, weight ) );
@@ -23,7 +26,7 @@ public class WorkingNeuron extends Neuron {
 
     public void randomizeWeights() {
         for ( Connection connection : connections ) {
-            connection.weight = (float) (Math.random() * 10);
+            connection.weight = (float) (random.nextDouble() * 2 - 1);
         }
     }
 

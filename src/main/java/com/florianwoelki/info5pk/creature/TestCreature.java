@@ -7,8 +7,12 @@ import java.awt.*;
  */
 public class TestCreature extends Creature {
 
-    public TestCreature(float x, float y) {
-        super( x, y );
+    public TestCreature(float x, float y, float viewAngle) {
+        super( x, y, viewAngle );
+    }
+
+    public TestCreature(Creature mother) {
+        super( mother );
     }
 
     @Override

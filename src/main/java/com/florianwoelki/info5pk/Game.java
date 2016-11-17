@@ -14,7 +14,6 @@ import java.awt.image.BufferStrategy;
 public class Game extends Canvas implements Runnable {
 
     private Window window;
-    private CreatureFactory creatureFactory;
     private Keyboard keyboard;
     private Mouse mouse;
 
@@ -34,9 +33,8 @@ public class Game extends Canvas implements Runnable {
         window = new Window( this );
         window.setVisible( true );
 
-        creatureFactory = new CreatureFactory();
         for ( int i = 0; i < 5; i++ ) {
-            creatureFactory.addCreature( new TestCreature( (float) (Math.random() * getWidth() - 8), (float) (Math.random() * getHeight() - 8) ) );
+            CreatureFactory.getInstance().addCreature( new TestCreature( (float) (Math.random() * getWidth() - 8), (float) (Math.random() * getHeight() - 8), 0 ) );
         }
     }
 
@@ -102,7 +100,7 @@ public class Game extends Canvas implements Runnable {
     }
 
     private void update() {
-        creatureFactory.update();
+        CreatureFactory.getInstance().update();
         keyboard.update();
     }
 
@@ -116,7 +114,7 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         g.setColor( Color.BLACK );
         g.fillRect( 0, 0, getWidth(), getHeight() );
-        creatureFactory.render( g );
+        CreatureFactory.getInstance().render( g );
         g.dispose();
         bs.show();
     }

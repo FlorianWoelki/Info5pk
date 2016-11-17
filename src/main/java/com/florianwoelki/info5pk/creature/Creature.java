@@ -6,6 +6,7 @@ import com.florianwoelki.info5pk.neuronalnetwork.NeuronalNetwork;
 import com.florianwoelki.info5pk.neuronalnetwork.WorkingNeuron;
 
 import java.awt.*;
+import java.util.Random;
 
 /**
  * Created by Florian Woelki on 16.11.16.
@@ -48,27 +49,30 @@ public abstract class Creature {
     protected final String NAME_OUT_ATTACK = "Attack";
     protected final String NAME_OUT_EAT = "Eat";
 
-    private InputNeuron inBias = new InputNeuron();
-    private InputNeuron inFoodValuePosition = new InputNeuron();
-    private InputNeuron inFoodValueFeeler = new InputNeuron();
-    private InputNeuron inOcclusionFeeler = new InputNeuron();
-    private InputNeuron inEnergy = new InputNeuron();
-    private InputNeuron inAge = new InputNeuron();
-    private InputNeuron inGeneticDifference = new InputNeuron();
-    private InputNeuron inWasAttacked = new InputNeuron();
-    private InputNeuron inWaterOnFeeler = new InputNeuron();
-    private InputNeuron inWaterOnCreature = new InputNeuron();
+    protected InputNeuron inBias = new InputNeuron();
+    protected InputNeuron inFoodValuePosition = new InputNeuron();
+    protected InputNeuron inFoodValueFeeler = new InputNeuron();
+    protected InputNeuron inOcclusionFeeler = new InputNeuron();
+    protected InputNeuron inEnergy = new InputNeuron();
+    protected InputNeuron inAge = new InputNeuron();
+    protected InputNeuron inGeneticDifference = new InputNeuron();
+    protected InputNeuron inWasAttacked = new InputNeuron();
+    protected InputNeuron inWaterOnFeeler = new InputNeuron();
+    protected InputNeuron inWaterOnCreature = new InputNeuron();
 
-    private WorkingNeuron outBirth = new WorkingNeuron();
-    private WorkingNeuron outRotate = new WorkingNeuron();
-    private WorkingNeuron outForward = new WorkingNeuron();
-    private WorkingNeuron outFeelerAngle = new WorkingNeuron();
-    private WorkingNeuron outAttack = new WorkingNeuron();
-    private WorkingNeuron outEat = new WorkingNeuron();
+    protected WorkingNeuron outBirth = new WorkingNeuron();
+    protected WorkingNeuron outRotate = new WorkingNeuron();
+    protected WorkingNeuron outForward = new WorkingNeuron();
+    protected WorkingNeuron outFeelerAngle = new WorkingNeuron();
+    protected WorkingNeuron outAttack = new WorkingNeuron();
+    protected WorkingNeuron outEat = new WorkingNeuron();
 
-    public Creature(float x, float y) {
+    private Random random = new Random();
+
+    public Creature(float x, float y, float viewAngle) {
         this.x = x;
         this.y = y;
+        this.viewAngle = viewAngle;
 
         inBias.setName( NAME_IN_BIAS );
         inFoodValuePosition.setName( NAME_IN_FOOD_VALUE_POSITION );
@@ -119,7 +123,7 @@ public abstract class Creature {
     public Creature(Creature mother) {
         this.x = mother.x;
         this.y = mother.y;
-        // TODO: Set view angle
+        this.viewAngle = (float) (random.nextDouble() * MathUtil.PI * 2);
         try {
             this.brain = mother.brain.cloneFullMesh();
         } catch ( Exception e ) {
@@ -151,19 +155,35 @@ public abstract class Creature {
         brain.invalidate();
 
         inBias.setValue( 1 );
-        inFoodValuePosition.setValue( 0 );
-        inFoodValueFeeler.setValue( 0 );
-        inOcclusionFeeler.setValue( 0 );
+        inFoodValuePosition.setValue( 0 ); // TODO: Find real value
+        inFoodValueFeeler.setValue( 0 ); // TODO: Find real value
+        inOcclusionFeeler.setValue( 0 ); // TODO: Find real value
         inEnergy.setValue( (energy - MINIMUM_SURVIVAL_ENERGY) / (START_ENERGY - MINIMUM_SURVIVAL_ENERGY) );
         inAge.setValue( age );
-        inGeneticDifference.setValue( 0 );
-        inWasAttacked.setValue( 0 );
-        inWaterOnFeeler.setValue( 0 );
-        inWaterOnCreature.setValue( 0 );
+        inGeneticDifference.setValue( 0 ); // TODO: Find real value
+        inWasAttacked.setValue( 0 ); // TODO: Find real value
+        inWaterOnFeeler.setValue( 0 ); // TODO: Find real value
+        inWaterOnCreature.setValue( 0 ); // TODO: Find real value
     }
 
     public void act() {
+        float rotateForce = MathUtil.clampNegativePosition( outRotate.getValue() );
+        viewAngle += rotateForce / 10;
 
+        float forwardX = MathUtil.sin( viewAngle );
+        float forwardY = MathUtil.cos( viewAngle );
+        float forwardForce = MathUtil.clampNegativePosition( outForward.getValue() );
+        forwardX *= forwardForce;
+        forwardY *= forwardForce;
+
+        x += forwardX;
+        y += forwardY;
+
+        float birthWish = outBirth.getValue();
+        if ( birthWish > 0 ) tryToGiveBirth();
+
+        feelerAngle = MathUtil.clampNegativePosition( outFeelerAngle.getValue() ) * MathUtil.PI;
+        calculateFeelerPosition();
     }
 
     public void tryToGiveBirth() {
@@ -173,7 +193,7 @@ public abstract class Creature {
     }
 
     public void giveBirth() {
-        // TODO: Add creature new Creature(this).
+        CreatureFactory.getInstance().addCreature( new TestCreature( this ) );
         energy -= START_ENERGY;
     }
 
