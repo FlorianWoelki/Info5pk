@@ -1,13 +1,16 @@
 package com.florianwoelki.info5pk.math;
 
+import java.util.Random;
+
 /**
  * Created by Florian Woelki on 16.11.16.
  */
 public class MathUtil {
 
     public static final float PI = 3.1415926535f;
-    public static final float DEGREETORAD = PI / 180.0f;
-    public static final float RADTODEGREE = 180.0f / PI;
+    public static final float DEGREE_TO_RADIANS = PI / 180.0f;
+    public static final float RADIANS_TO_DEGREE = 180.0f / PI;
+    public static final Random random = new Random();
 
     public static float abs(float value) {
         return Math.abs( value );

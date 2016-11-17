@@ -6,7 +6,6 @@ import com.florianwoelki.info5pk.neuronalnetwork.NeuronalNetwork;
 import com.florianwoelki.info5pk.neuronalnetwork.WorkingNeuron;
 
 import java.awt.*;
-import java.util.Random;
 
 /**
  * Created by Florian Woelki on 16.11.16.
@@ -68,8 +67,6 @@ public abstract class Creature {
     protected WorkingNeuron outAttack = new WorkingNeuron();
     protected WorkingNeuron outEat = new WorkingNeuron();
 
-    private Random random = new Random();
-
     public Creature(float x, float y, float viewAngle) {
         this.x = x;
         this.y = y;
@@ -124,7 +121,7 @@ public abstract class Creature {
     public Creature(Creature mother) {
         this.x = mother.x;
         this.y = mother.y;
-        this.viewAngle = (float) (random.nextDouble() * MathUtil.PI * 2);
+        this.viewAngle = (float) (MathUtil.random.nextDouble() * MathUtil.PI * 2);
         try {
             this.brain = mother.brain.cloneFullMesh();
         } catch ( Exception e ) {
