@@ -17,6 +17,7 @@ public abstract class Creature {
     protected final float MINIMUM_SURVIVAL_ENERGY = 100;
 
     protected final int SIZE = 16;
+    protected final int FEELER_SIZE = 10;
 
     protected float x;
     protected float y;

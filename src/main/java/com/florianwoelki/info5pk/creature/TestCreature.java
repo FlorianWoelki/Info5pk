@@ -22,12 +22,16 @@ public class TestCreature extends Creature {
 
         x += anim1;
         y += anim2;
+
+        act();
     }
 
     @Override
     public void render(Graphics g) {
         g.setColor( Color.WHITE );
         g.fillRect( (int) x, (int) y, SIZE, SIZE );
+        g.setColor( Color.RED );
+        g.fillRect( (int) feelerX, (int) feelerY, FEELER_SIZE, FEELER_SIZE );
     }
 
 }
