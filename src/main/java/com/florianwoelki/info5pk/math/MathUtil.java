@@ -42,6 +42,17 @@ public class MathUtil {
         return et / (1 + et);
     }
 
+    public static float interpolateCosine(float a, float b, float t) {
+        float t2 = (1 - cos( t * PI )) / 2;
+        return (a * (1 - t2) + b * t2);
+    }
+
+    public static float clamp(float value) {
+        if ( value < 0 ) return 0;
+        if ( value > 1 ) return 1;
+        return value;
+    }
+
     public static float clampNegativePosition(float value) {
         if ( value < -1 ) return -1;
         if ( value > 1 ) return 1;
