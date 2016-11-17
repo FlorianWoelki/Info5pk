@@ -23,6 +23,7 @@ public class TestCreature extends Creature {
         x += anim1;
         y += anim2;
 
+        readSensors();
         act();
     }
 
