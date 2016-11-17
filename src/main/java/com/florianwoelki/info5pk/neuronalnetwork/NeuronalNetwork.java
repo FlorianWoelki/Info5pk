@@ -1,5 +1,11 @@
 package com.florianwoelki.info5pk.neuronalnetwork;
 
+import com.florianwoelki.info5pk.neuronalnetwork.exception.NNNotFullyMeshedException;
+import com.florianwoelki.info5pk.neuronalnetwork.exception.NotSameAmountOfNeuronsException;
+import com.florianwoelki.info5pk.neuronalnetwork.neuron.Connection;
+import com.florianwoelki.info5pk.neuronalnetwork.neuron.InputNeuron;
+import com.florianwoelki.info5pk.neuronalnetwork.neuron.WorkingNeuron;
+
 import java.util.ArrayList;
 import java.util.List;
 

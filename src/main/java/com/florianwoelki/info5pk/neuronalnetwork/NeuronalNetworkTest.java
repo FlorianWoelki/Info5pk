@@ -1,5 +1,8 @@
 package com.florianwoelki.info5pk.neuronalnetwork;
 
+import com.florianwoelki.info5pk.neuronalnetwork.neuron.InputNeuron;
+import com.florianwoelki.info5pk.neuronalnetwork.neuron.WorkingNeuron;
+
 /**
  * Created by Florian Woelki on 16.11.16.
  */

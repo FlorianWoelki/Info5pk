@@ -1,4 +1,6 @@
-package com.florianwoelki.info5pk.neuronalnetwork;
+package com.florianwoelki.info5pk.neuronalnetwork.neuron;
+
+import com.florianwoelki.info5pk.neuronalnetwork.neuron.Neuron;
 
 /**
  * Created by Florian Woelki on 16.11.16.

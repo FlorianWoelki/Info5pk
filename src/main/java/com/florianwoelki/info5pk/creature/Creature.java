@@ -1,9 +1,9 @@
 package com.florianwoelki.info5pk.creature;
 
 import com.florianwoelki.info5pk.math.MathUtil;
-import com.florianwoelki.info5pk.neuronalnetwork.InputNeuron;
+import com.florianwoelki.info5pk.neuronalnetwork.neuron.InputNeuron;
 import com.florianwoelki.info5pk.neuronalnetwork.NeuronalNetwork;
-import com.florianwoelki.info5pk.neuronalnetwork.WorkingNeuron;
+import com.florianwoelki.info5pk.neuronalnetwork.neuron.WorkingNeuron;
 
 import java.awt.*;
 

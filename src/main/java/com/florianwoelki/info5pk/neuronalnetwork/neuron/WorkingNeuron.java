@@ -1,4 +1,4 @@
-package com.florianwoelki.info5pk.neuronalnetwork;
+package com.florianwoelki.info5pk.neuronalnetwork.neuron;
 
 import com.florianwoelki.info5pk.math.MathUtil;
 
