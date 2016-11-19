@@ -1,4 +1,4 @@
-package com.florianwoelki.info5pk.level;
+package com.florianwoelki.info5pk.level.tile;
 
 import java.awt.*;
 

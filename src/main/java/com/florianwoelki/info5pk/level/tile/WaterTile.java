@@ -1,4 +1,4 @@
-package com.florianwoelki.info5pk.level;
+package com.florianwoelki.info5pk.level.tile;
 
 /**
  * Created by Florian Woelki on 19.11.16.

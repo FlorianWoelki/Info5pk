@@ -1,6 +1,6 @@
 package com.florianwoelki.info5pk.level.generator;
 
-import com.florianwoelki.info5pk.level.Tile;
+import com.florianwoelki.info5pk.level.tile.Tile;
 import com.florianwoelki.info5pk.math.MathUtil;
 
 import javax.swing.*;
