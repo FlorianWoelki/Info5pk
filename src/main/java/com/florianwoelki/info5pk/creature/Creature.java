@@ -1,9 +1,9 @@
 package com.florianwoelki.info5pk.creature;
 
 import com.florianwoelki.info5pk.math.MathUtil;
-import com.florianwoelki.info5pk.neuronalnetwork.neuron.InputNeuron;
-import com.florianwoelki.info5pk.neuronalnetwork.NeuronalNetwork;
-import com.florianwoelki.info5pk.neuronalnetwork.neuron.WorkingNeuron;
+import com.florianwoelki.info5pk.neuralnetwork.neuron.InputNeuron;
+import com.florianwoelki.info5pk.neuralnetwork.NeuralNetwork;
+import com.florianwoelki.info5pk.neuralnetwork.neuron.WorkingNeuron;
 
 import java.awt.*;
 
@@ -29,7 +29,7 @@ public abstract class Creature {
     protected float energy = 150;
     protected float age = 0;
 
-    protected NeuronalNetwork brain;
+    protected NeuralNetwork brain;
 
     protected final String NAME_IN_BIAS = "bias";
     protected final String NAME_IN_FOOD_VALUE_POSITION = "Food Value Position";
@@ -90,7 +90,7 @@ public abstract class Creature {
         outAttack.setName( NAME_OUT_ATTACK );
         outEat.setName( NAME_OUT_EAT );
 
-        brain = new NeuronalNetwork();
+        brain = new NeuralNetwork();
 
         brain.addInputNeuron( inBias );
         brain.addInputNeuron( inFoodValuePosition );

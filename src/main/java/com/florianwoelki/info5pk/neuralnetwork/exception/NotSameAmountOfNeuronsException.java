@@ -1,4 +1,4 @@
-package com.florianwoelki.info5pk.neuronalnetwork.exception;
+package com.florianwoelki.info5pk.neuralnetwork.exception;
 
 /**
  * Created by Florian Woelki on 16.11.16.

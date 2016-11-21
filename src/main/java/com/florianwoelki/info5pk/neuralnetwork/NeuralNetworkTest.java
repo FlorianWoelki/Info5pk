@@ -1,17 +1,17 @@
-package com.florianwoelki.info5pk.neuronalnetwork;
+package com.florianwoelki.info5pk.neuralnetwork;
 
-import com.florianwoelki.info5pk.neuronalnetwork.neuron.InputNeuron;
-import com.florianwoelki.info5pk.neuronalnetwork.neuron.WorkingNeuron;
+import com.florianwoelki.info5pk.neuralnetwork.neuron.InputNeuron;
+import com.florianwoelki.info5pk.neuralnetwork.neuron.WorkingNeuron;
 
 /**
  * Created by Florian Woelki on 16.11.16.
  */
-public class NeuronalNetworkTest {
+public class NeuralNetworkTest {
 
     public static void main(String[] args) throws Exception {
-        System.out.println( "Begin Neuronal Network Test" );
+        System.out.println( "Begin Neural Network Test" );
 
-        NeuronalNetwork nn = new NeuronalNetwork();
+        NeuralNetwork nn = new NeuralNetwork();
         InputNeuron in1 = new InputNeuron();
         InputNeuron in2 = new InputNeuron();
         InputNeuron in3 = new InputNeuron();
@@ -34,7 +34,7 @@ public class NeuronalNetworkTest {
 
         nn.randomizeAllWeights();
 
-        NeuronalNetwork nn2 = nn.cloneFullMesh();
+        NeuralNetwork nn2 = nn.cloneFullMesh();
 
         for ( int i = 0; i < 3; i++ ) {
             if ( nn2.getOutputNeuronFromIndex( i ).getValue() != nn.getOutputNeuronFromIndex( i ).getValue() ) {

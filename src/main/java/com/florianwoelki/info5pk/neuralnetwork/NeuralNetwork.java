@@ -1,10 +1,10 @@
-package com.florianwoelki.info5pk.neuronalnetwork;
+package com.florianwoelki.info5pk.neuralnetwork;
 
-import com.florianwoelki.info5pk.neuronalnetwork.exception.NNNotFullyMeshedException;
-import com.florianwoelki.info5pk.neuronalnetwork.exception.NotSameAmountOfNeuronsException;
-import com.florianwoelki.info5pk.neuronalnetwork.neuron.Connection;
-import com.florianwoelki.info5pk.neuronalnetwork.neuron.InputNeuron;
-import com.florianwoelki.info5pk.neuronalnetwork.neuron.WorkingNeuron;
+import com.florianwoelki.info5pk.neuralnetwork.exception.NNNotFullyMeshedException;
+import com.florianwoelki.info5pk.neuralnetwork.exception.NotSameAmountOfNeuronsException;
+import com.florianwoelki.info5pk.neuralnetwork.neuron.Connection;
+import com.florianwoelki.info5pk.neuralnetwork.neuron.InputNeuron;
+import com.florianwoelki.info5pk.neuralnetwork.neuron.WorkingNeuron;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by Florian Woelki on 16.11.16.
  */
-public class NeuronalNetwork {
+public class NeuralNetwork {
 
     private boolean isFullyMeshedGenerated;
 
@@ -105,12 +105,12 @@ public class NeuronalNetwork {
         return null;
     }
 
-    public NeuronalNetwork cloneFullMesh() throws NNNotFullyMeshedException, NotSameAmountOfNeuronsException {
+    public NeuralNetwork cloneFullMesh() throws NNNotFullyMeshedException, NotSameAmountOfNeuronsException {
         if ( !isFullyMeshedGenerated ) {
-            throw new NNNotFullyMeshedException( "The Neuronal Network is not fully meshed generated." );
+            throw new NNNotFullyMeshedException( "The Neural Network is not fully meshed generated." );
         }
 
-        NeuronalNetwork copy = new NeuronalNetwork();
+        NeuralNetwork copy = new NeuralNetwork();
 
         for ( InputNeuron inputNeuron : inputNeurons ) {
             copy.addInputNeuron( (InputNeuron) inputNeuron.nameCopy() );
