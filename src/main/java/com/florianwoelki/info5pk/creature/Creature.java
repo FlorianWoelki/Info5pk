@@ -1,5 +1,6 @@
 package com.florianwoelki.info5pk.creature;
 
+import com.florianwoelki.info5pk.level.Level;
 import com.florianwoelki.info5pk.math.MathUtil;
 import com.florianwoelki.info5pk.neuralnetwork.NeuralNetwork;
 import com.florianwoelki.info5pk.neuralnetwork.neuron.InputNeuron;
@@ -67,7 +68,11 @@ public abstract class Creature {
     protected WorkingNeuron outAttack = new WorkingNeuron();
     protected WorkingNeuron outEat = new WorkingNeuron();
 
-    public Creature( float x, float y, float viewAngle ) {
+    protected Level level;
+    public float mouseWheelScale = 1;
+
+    public Creature( Level level, float x, float y, float viewAngle ) {
+        this.level = level;
         this.x = x;
         this.y = y;
         this.viewAngle = viewAngle;
@@ -192,7 +197,7 @@ public abstract class Creature {
     }
 
     public void giveBirth() {
-        CreatureFactory.getInstance().addCreature( new TestCreature( this ) );
+        this.level.getCreatureFactory().addCreature( new TestCreature( this ) );
         this.energy -= this.START_ENERGY;
     }
 
@@ -210,6 +215,6 @@ public abstract class Creature {
 
     public abstract void update();
 
-    public abstract void render( Graphics g );
+    public abstract void render( Graphics g, int xOffset, int yOffset );
 
 }

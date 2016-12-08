@@ -11,7 +11,7 @@ import java.awt.event.MouseWheelListener;
  */
 public class Mouse implements MouseListener, MouseMotionListener, MouseWheelListener {
 
-    private float mouseWheelScale = 1;
+    private float mouseWheelScale = 0.5f;
 
     @Override
     public void mouseClicked( MouseEvent e ) {

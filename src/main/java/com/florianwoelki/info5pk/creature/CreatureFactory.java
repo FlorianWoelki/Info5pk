@@ -9,15 +9,6 @@ import java.util.List;
  */
 public class CreatureFactory {
 
-    private static CreatureFactory instance;
-
-    public static CreatureFactory getInstance() {
-        if ( instance == null ) {
-            instance = new CreatureFactory();
-        }
-        return instance;
-    }
-
     private List<Creature> creatures;
 
     public CreatureFactory() {
@@ -29,7 +20,14 @@ public class CreatureFactory {
     }
 
     public void render( Graphics g ) {
-        this.creatures.forEach( creature -> creature.render( g ) );
+        this.creatures.forEach( creature -> creature.render( g, 0, 0 ) );
+    }
+
+    public void render( Graphics g, int xOffset, int yOffset, float mouseWheelScale ) {
+        this.creatures.forEach( creature -> {
+            creature.mouseWheelScale = mouseWheelScale;
+            creature.render( g, xOffset, yOffset );
+        } );
     }
 
     public void update() {

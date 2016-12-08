@@ -1,14 +1,17 @@
 package com.florianwoelki.info5pk.creature;
 
+import com.florianwoelki.info5pk.level.Level;
+
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 /**
  * Created by Florian Woelki on 16.11.16.
  */
 public class TestCreature extends Creature {
 
-    public TestCreature( float x, float y, float viewAngle ) {
-        super( x, y, viewAngle );
+    public TestCreature( Level level, float x, float y, float viewAngle ) {
+        super( level, x, y, viewAngle );
     }
 
     public TestCreature( Creature mother ) {
@@ -17,22 +20,23 @@ public class TestCreature extends Creature {
 
     @Override
     public void update() {
-        int anim1 = (int) ( Math.sin( System.currentTimeMillis() % 1000.0 / 1000 * Math.PI * 2 ) * 3 );
-        int anim2 = (int) ( Math.cos( System.currentTimeMillis() % 1000.0 / 1000 * Math.PI * 2 ) * 3 );
-
-        this.x += anim1;
-        this.y += anim2;
-
         this.readSensors();
         this.act();
     }
 
     @Override
-    public void render( Graphics g ) {
-        g.setColor( Color.WHITE );
-        g.fillRect( (int) this.x, (int) this.y, this.SIZE, this.SIZE );
-        g.setColor( Color.RED );
-        g.fillRect( (int) this.feelerX, (int) this.feelerY, this.FEELER_SIZE, this.FEELER_SIZE );
+    public void render( Graphics g, int xOffset, int yOffset ) {
+        Graphics2D g2d = (Graphics2D) g.create();
+        AffineTransform at = new AffineTransform();
+        at.scale( this.mouseWheelScale, this.mouseWheelScale );
+        g2d.setTransform( at );
+
+        g2d.setColor( Color.WHITE );
+        g2d.fillRect( (int) this.x + xOffset * 16, (int) this.y + yOffset * 16, this.SIZE, this.SIZE );
+        g2d.setColor( Color.RED );
+        g2d.fillRect( (int) this.feelerX + xOffset * 16, (int) this.feelerY + yOffset * 16, this.FEELER_SIZE, this.FEELER_SIZE );
+
+        g2d.dispose();
     }
 
 }
