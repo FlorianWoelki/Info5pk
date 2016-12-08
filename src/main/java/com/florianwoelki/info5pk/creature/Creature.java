@@ -1,8 +1,8 @@
 package com.florianwoelki.info5pk.creature;
 
 import com.florianwoelki.info5pk.math.MathUtil;
-import com.florianwoelki.info5pk.neuralnetwork.neuron.InputNeuron;
 import com.florianwoelki.info5pk.neuralnetwork.NeuralNetwork;
+import com.florianwoelki.info5pk.neuralnetwork.neuron.InputNeuron;
 import com.florianwoelki.info5pk.neuralnetwork.neuron.WorkingNeuron;
 
 import java.awt.*;
@@ -67,148 +67,149 @@ public abstract class Creature {
     protected WorkingNeuron outAttack = new WorkingNeuron();
     protected WorkingNeuron outEat = new WorkingNeuron();
 
-    public Creature(float x, float y, float viewAngle) {
+    public Creature( float x, float y, float viewAngle ) {
         this.x = x;
         this.y = y;
         this.viewAngle = viewAngle;
 
-        inBias.setName( NAME_IN_BIAS );
-        inFoodValuePosition.setName( NAME_IN_FOOD_VALUE_POSITION );
-        inFoodValueFeeler.setName( NAME_IN_FOOD_VALUE_FEELER );
-        inOcclusionFeeler.setName( NAME_IN_OCCLUSION_FEELER );
-        inEnergy.setName( NAME_IN_ENERGY );
-        inAge.setName( NAME_IN_AGE );
-        inGeneticDifference.setName( NAME_IN_GENETIC_DIFFERENCE );
-        inWasAttacked.setName( NAME_IN_WAS_ATTACKED );
-        inWaterOnFeeler.setName( NAME_IN_WATER_ON_FEELER );
-        inWaterOnCreature.setName( NAME_IN_WATER_ON_CREATURE );
+        this.inBias.setName( this.NAME_IN_BIAS );
+        this.inFoodValuePosition.setName( this.NAME_IN_FOOD_VALUE_POSITION );
+        this.inFoodValueFeeler.setName( this.NAME_IN_FOOD_VALUE_FEELER );
+        this.inOcclusionFeeler.setName( this.NAME_IN_OCCLUSION_FEELER );
+        this.inEnergy.setName( this.NAME_IN_ENERGY );
+        this.inAge.setName( this.NAME_IN_AGE );
+        this.inGeneticDifference.setName( this.NAME_IN_GENETIC_DIFFERENCE );
+        this.inWasAttacked.setName( this.NAME_IN_WAS_ATTACKED );
+        this.inWaterOnFeeler.setName( this.NAME_IN_WATER_ON_FEELER );
+        this.inWaterOnCreature.setName( this.NAME_IN_WATER_ON_CREATURE );
 
-        outBirth.setName( NAME_OUT_BIRTH );
-        outRotate.setName( NAME_OUT_ROTATE );
-        outForward.setName( NAME_OUT_FORWARD );
-        outFeelerAngle.setName( NAME_OUT_FEELER_ANGLE );
-        outAttack.setName( NAME_OUT_ATTACK );
-        outEat.setName( NAME_OUT_EAT );
+        this.outBirth.setName( this.NAME_OUT_BIRTH );
+        this.outRotate.setName( this.NAME_OUT_ROTATE );
+        this.outForward.setName( this.NAME_OUT_FORWARD );
+        this.outFeelerAngle.setName( this.NAME_OUT_FEELER_ANGLE );
+        this.outAttack.setName( this.NAME_OUT_ATTACK );
+        this.outEat.setName( this.NAME_OUT_EAT );
 
-        brain = new NeuralNetwork();
+        this.brain = new NeuralNetwork();
 
-        brain.addInputNeuron( inBias );
-        brain.addInputNeuron( inFoodValuePosition );
-        brain.addInputNeuron( inFoodValueFeeler );
-        brain.addInputNeuron( inOcclusionFeeler );
-        brain.addInputNeuron( inEnergy );
-        brain.addInputNeuron( inAge );
-        brain.addInputNeuron( inGeneticDifference );
-        brain.addInputNeuron( inWasAttacked );
-        brain.addInputNeuron( inWaterOnFeeler );
-        brain.addInputNeuron( inWaterOnCreature );
+        this.brain.addInputNeuron( this.inBias );
+        this.brain.addInputNeuron( this.inFoodValuePosition );
+        this.brain.addInputNeuron( this.inFoodValueFeeler );
+        this.brain.addInputNeuron( this.inOcclusionFeeler );
+        this.brain.addInputNeuron( this.inEnergy );
+        this.brain.addInputNeuron( this.inAge );
+        this.brain.addInputNeuron( this.inGeneticDifference );
+        this.brain.addInputNeuron( this.inWasAttacked );
+        this.brain.addInputNeuron( this.inWaterOnFeeler );
+        this.brain.addInputNeuron( this.inWaterOnCreature );
 
-        brain.generateHiddenNeurons( 10 );
+        this.brain.generateHiddenNeurons( 10 );
 
-        brain.addOutputNeuron( outBirth );
-        brain.addOutputNeuron( outRotate );
-        brain.addOutputNeuron( outForward );
-        brain.addOutputNeuron( outFeelerAngle );
-        brain.addOutputNeuron( outAttack );
-        brain.addOutputNeuron( outEat );
+        this.brain.addOutputNeuron( this.outBirth );
+        this.brain.addOutputNeuron( this.outRotate );
+        this.brain.addOutputNeuron( this.outForward );
+        this.brain.addOutputNeuron( this.outFeelerAngle );
+        this.brain.addOutputNeuron( this.outAttack );
+        this.brain.addOutputNeuron( this.outEat );
 
-        brain.generateFullMesh();
+        this.brain.generateFullMesh();
 
-        brain.randomizeAllWeights();
-        calculateFeelerPosition();
+        this.brain.randomizeAllWeights();
+
+        this.calculateFeelerPosition();
     }
 
-    public Creature(Creature mother) {
+    public Creature( Creature mother ) {
         this.x = mother.x;
         this.y = mother.y;
-        this.viewAngle = (float) (MathUtil.random.nextDouble() * MathUtil.PI * 2);
+        this.viewAngle = (float) ( MathUtil.random.nextDouble() * MathUtil.PI * 2 );
         try {
             this.brain = mother.brain.cloneFullMesh();
         } catch ( Exception e ) {
             e.printStackTrace();
         }
 
-        inBias = brain.getInputNeuronFromName( NAME_IN_BIAS );
-        inFoodValuePosition = brain.getInputNeuronFromName( NAME_IN_FOOD_VALUE_POSITION );
-        inFoodValueFeeler = brain.getInputNeuronFromName( NAME_IN_FOOD_VALUE_FEELER );
-        inOcclusionFeeler = brain.getInputNeuronFromName( NAME_IN_OCCLUSION_FEELER );
-        inEnergy = brain.getInputNeuronFromName( NAME_IN_ENERGY );
-        inAge = brain.getInputNeuronFromName( NAME_IN_AGE );
-        inGeneticDifference = brain.getInputNeuronFromName( NAME_IN_GENETIC_DIFFERENCE );
-        inWasAttacked = brain.getInputNeuronFromName( NAME_IN_WAS_ATTACKED );
-        inWaterOnFeeler = brain.getInputNeuronFromName( NAME_IN_WATER_ON_FEELER );
-        inWaterOnCreature = brain.getInputNeuronFromName( NAME_IN_WATER_ON_CREATURE );
+        this.inBias = this.brain.getInputNeuronFromName( this.NAME_IN_BIAS );
+        this.inFoodValuePosition = this.brain.getInputNeuronFromName( this.NAME_IN_FOOD_VALUE_POSITION );
+        this.inFoodValueFeeler = this.brain.getInputNeuronFromName( this.NAME_IN_FOOD_VALUE_FEELER );
+        this.inOcclusionFeeler = this.brain.getInputNeuronFromName( this.NAME_IN_OCCLUSION_FEELER );
+        this.inEnergy = this.brain.getInputNeuronFromName( this.NAME_IN_ENERGY );
+        this.inAge = this.brain.getInputNeuronFromName( this.NAME_IN_AGE );
+        this.inGeneticDifference = this.brain.getInputNeuronFromName( this.NAME_IN_GENETIC_DIFFERENCE );
+        this.inWasAttacked = this.brain.getInputNeuronFromName( this.NAME_IN_WAS_ATTACKED );
+        this.inWaterOnFeeler = this.brain.getInputNeuronFromName( this.NAME_IN_WATER_ON_FEELER );
+        this.inWaterOnCreature = this.brain.getInputNeuronFromName( this.NAME_IN_WATER_ON_CREATURE );
 
-        outBirth = brain.getOutputNeuronFromName( NAME_OUT_BIRTH );
-        outRotate = brain.getOutputNeuronFromName( NAME_OUT_ROTATE );
-        outForward = brain.getOutputNeuronFromName( NAME_OUT_FORWARD );
-        outFeelerAngle = brain.getOutputNeuronFromName( NAME_OUT_FEELER_ANGLE );
-        outAttack = brain.getOutputNeuronFromName( NAME_OUT_ATTACK );
-        outEat = brain.getOutputNeuronFromName( NAME_OUT_EAT );
+        this.outBirth = this.brain.getOutputNeuronFromName( this.NAME_OUT_BIRTH );
+        this.outRotate = this.brain.getOutputNeuronFromName( this.NAME_OUT_ROTATE );
+        this.outForward = this.brain.getOutputNeuronFromName( this.NAME_OUT_FORWARD );
+        this.outFeelerAngle = this.brain.getOutputNeuronFromName( this.NAME_OUT_FEELER_ANGLE );
+        this.outAttack = this.brain.getOutputNeuronFromName( this.NAME_OUT_ATTACK );
+        this.outEat = this.brain.getOutputNeuronFromName( this.NAME_OUT_EAT );
 
-        calculateFeelerPosition();
+        this.calculateFeelerPosition();
     }
 
     public void readSensors() {
-        brain.invalidate();
+        this.brain.invalidate();
 
-        inBias.setValue( 1 );
-        inFoodValuePosition.setValue( 0 ); // TODO: Find real value
-        inFoodValueFeeler.setValue( 0 ); // TODO: Find real value
-        inOcclusionFeeler.setValue( 0 ); // TODO: Find real value
-        inEnergy.setValue( (energy - MINIMUM_SURVIVAL_ENERGY) / (START_ENERGY - MINIMUM_SURVIVAL_ENERGY) );
-        inAge.setValue( age );
-        inGeneticDifference.setValue( 0 ); // TODO: Find real value
-        inWasAttacked.setValue( 0 ); // TODO: Find real value
-        inWaterOnFeeler.setValue( 0 ); // TODO: Find real value
-        inWaterOnCreature.setValue( 0 ); // TODO: Find real value
+        this.inBias.setValue( 1 );
+        this.inFoodValuePosition.setValue( 0 ); // TODO: Find real value
+        this.inFoodValueFeeler.setValue( 0 ); // TODO: Find real value
+        this.inOcclusionFeeler.setValue( 0 ); // TODO: Find real value
+        this.inEnergy.setValue( ( this.energy - this.MINIMUM_SURVIVAL_ENERGY ) / ( this.START_ENERGY - this.MINIMUM_SURVIVAL_ENERGY ) );
+        this.inAge.setValue( this.age );
+        this.inGeneticDifference.setValue( 0 ); // TODO: Find real value
+        this.inWasAttacked.setValue( 0 ); // TODO: Find real value
+        this.inWaterOnFeeler.setValue( 0 ); // TODO: Find real value
+        this.inWaterOnCreature.setValue( 0 ); // TODO: Find real value
     }
 
     public void act() {
-        float rotateForce = MathUtil.clampNegativePosition( outRotate.getValue() );
-        viewAngle += rotateForce / 10;
+        float rotateForce = MathUtil.clampNegativePosition( this.outRotate.getValue() );
+        this.viewAngle += rotateForce / 10;
 
-        float forwardX = MathUtil.sin( viewAngle );
-        float forwardY = MathUtil.cos( viewAngle );
-        float forwardForce = MathUtil.clampNegativePosition( outForward.getValue() );
+        float forwardX = MathUtil.sin( this.viewAngle );
+        float forwardY = MathUtil.cos( this.viewAngle );
+        float forwardForce = MathUtil.clampNegativePosition( this.outForward.getValue() );
         forwardX *= forwardForce;
         forwardY *= forwardForce;
 
-        x += forwardX;
-        y += forwardY;
+        this.x += forwardX;
+        this.y += forwardY;
 
-        float birthWish = outBirth.getValue();
-        if ( birthWish > 0 ) tryToGiveBirth();
+        float birthWish = this.outBirth.getValue();
+        if ( birthWish > 0 ) this.tryToGiveBirth();
 
-        feelerAngle = MathUtil.clampNegativePosition( outFeelerAngle.getValue() ) * MathUtil.PI;
-        calculateFeelerPosition();
+        this.feelerAngle = MathUtil.clampNegativePosition( this.outFeelerAngle.getValue() ) * MathUtil.PI;
+        this.calculateFeelerPosition();
     }
 
     public void tryToGiveBirth() {
-        if ( isAbleToGiveBirth() ) {
-            giveBirth();
+        if ( this.isAbleToGiveBirth() ) {
+            this.giveBirth();
         }
     }
 
     public void giveBirth() {
         CreatureFactory.getInstance().addCreature( new TestCreature( this ) );
-        energy -= START_ENERGY;
+        this.energy -= this.START_ENERGY;
     }
 
     public boolean isAbleToGiveBirth() {
-        return energy > START_ENERGY + MINIMUM_SURVIVAL_ENERGY * 1.1f;
+        return this.energy > this.START_ENERGY + this.MINIMUM_SURVIVAL_ENERGY * 1.1f;
     }
 
     public void calculateFeelerPosition() {
-        float angle = feelerAngle + viewAngle;
+        float angle = this.feelerAngle + this.viewAngle;
         float x = MathUtil.sin( angle ) * 100;
         float y = MathUtil.cos( angle ) * 100;
-        feelerX = this.x + x;
-        feelerY = this.y + y;
+        this.feelerX = this.x + x;
+        this.feelerY = this.y + y;
     }
 
     public abstract void update();
 
-    public abstract void render(Graphics g);
+    public abstract void render( Graphics g );
 
 }

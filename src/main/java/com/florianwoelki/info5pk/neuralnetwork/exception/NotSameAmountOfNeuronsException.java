@@ -5,7 +5,7 @@ package com.florianwoelki.info5pk.neuralnetwork.exception;
  */
 public class NotSameAmountOfNeuronsException extends Exception {
 
-    public NotSameAmountOfNeuronsException(String message) {
+    public NotSameAmountOfNeuronsException( String message ) {
         super( message );
     }
 

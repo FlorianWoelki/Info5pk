@@ -20,85 +20,85 @@ public class NeuralNetwork {
     private List<WorkingNeuron> hiddenNeurons = new ArrayList<>();
     private List<WorkingNeuron> outputNeurons = new ArrayList<>();
 
-    public void addInputNeuron(InputNeuron inputNeuron) {
-        inputNeurons.add( inputNeuron );
+    public void addInputNeuron( InputNeuron inputNeuron ) {
+        this.inputNeurons.add( inputNeuron );
     }
 
-    public void addHiddenNeuron(WorkingNeuron workingNeuron) {
-        hiddenNeurons.add( workingNeuron );
+    public void addHiddenNeuron( WorkingNeuron workingNeuron ) {
+        this.hiddenNeurons.add( workingNeuron );
     }
 
-    public void addOutputNeuron(WorkingNeuron workingNeuron) {
-        outputNeurons.add( workingNeuron );
+    public void addOutputNeuron( WorkingNeuron workingNeuron ) {
+        this.outputNeurons.add( workingNeuron );
     }
 
-    public void generateHiddenNeurons(int amount) {
+    public void generateHiddenNeurons( int amount ) {
         for ( int i = 0; i < amount; i++ ) {
-            hiddenNeurons.add( new WorkingNeuron() );
+            this.hiddenNeurons.add( new WorkingNeuron() );
         }
     }
 
     public void invalidate() {
-        for ( WorkingNeuron wn : hiddenNeurons ) {
+        for ( WorkingNeuron wn : this.hiddenNeurons ) {
             wn.invalidate();
         }
 
-        for ( WorkingNeuron wn : outputNeurons ) {
+        for ( WorkingNeuron wn : this.outputNeurons ) {
             wn.invalidate();
         }
     }
 
     public void randomizeAllWeights() {
-        for ( WorkingNeuron hiddenNeuron : hiddenNeurons ) {
+        for ( WorkingNeuron hiddenNeuron : this.hiddenNeurons ) {
             hiddenNeuron.randomizeWeights();
         }
 
-        for ( WorkingNeuron outputNeuron : outputNeurons ) {
+        for ( WorkingNeuron outputNeuron : this.outputNeurons ) {
             outputNeuron.randomizeWeights();
         }
     }
 
     public void generateFullMesh() {
-        isFullyMeshedGenerated = true;
+        this.isFullyMeshedGenerated = true;
 
-        for ( WorkingNeuron hiddenNeuron : hiddenNeurons ) {
-            for ( InputNeuron inputNeuron : inputNeurons ) {
+        for ( WorkingNeuron hiddenNeuron : this.hiddenNeurons ) {
+            for ( InputNeuron inputNeuron : this.inputNeurons ) {
                 hiddenNeuron.addNeuronConnection( inputNeuron, 1 );
             }
         }
 
-        for ( WorkingNeuron outputNeuron : outputNeurons ) {
-            for ( WorkingNeuron hiddenNeuron : hiddenNeurons ) {
+        for ( WorkingNeuron outputNeuron : this.outputNeurons ) {
+            for ( WorkingNeuron hiddenNeuron : this.hiddenNeurons ) {
                 outputNeuron.addNeuronConnection( hiddenNeuron, 1 );
             }
         }
     }
 
-    public InputNeuron getInputNeuronFromName(String name) {
-        for ( InputNeuron neuron : inputNeurons ) {
-            if ( name == neuron.getName() ) {
+    public InputNeuron getInputNeuronFromName( String name ) {
+        for ( InputNeuron neuron : this.inputNeurons ) {
+            if ( name.equals( neuron.getName() ) ) {
                 return neuron;
             }
         }
         return null;
     }
 
-    public WorkingNeuron getHiddenNeuronFromName(String name) {
-        for ( WorkingNeuron neuron : hiddenNeurons ) {
-            if ( name == neuron.getName() ) {
+    public WorkingNeuron getHiddenNeuronFromName( String name ) {
+        for ( WorkingNeuron neuron : this.hiddenNeurons ) {
+            if ( name.equals( neuron.getName() ) ) {
                 return neuron;
             }
         }
         return null;
     }
 
-    public WorkingNeuron getOutputNeuronFromIndex(int index) {
-        return outputNeurons.get( index );
+    public WorkingNeuron getOutputNeuronFromIndex( int index ) {
+        return this.outputNeurons.get( index );
     }
 
-    public WorkingNeuron getOutputNeuronFromName(String name) {
-        for ( WorkingNeuron neuron : outputNeurons ) {
-            if ( name == neuron.getName() ) {
+    public WorkingNeuron getOutputNeuronFromName( String name ) {
+        for ( WorkingNeuron neuron : this.outputNeurons ) {
+            if ( name.equals( neuron.getName() ) ) {
                 return neuron;
             }
         }
@@ -106,28 +106,28 @@ public class NeuralNetwork {
     }
 
     public NeuralNetwork cloneFullMesh() throws NNNotFullyMeshedException, NotSameAmountOfNeuronsException {
-        if ( !isFullyMeshedGenerated ) {
+        if ( !this.isFullyMeshedGenerated ) {
             throw new NNNotFullyMeshedException( "The Neural Network is not fully meshed generated." );
         }
 
         NeuralNetwork copy = new NeuralNetwork();
 
-        for ( InputNeuron inputNeuron : inputNeurons ) {
+        for ( InputNeuron inputNeuron : this.inputNeurons ) {
             copy.addInputNeuron( (InputNeuron) inputNeuron.nameCopy() );
         }
 
-        for ( WorkingNeuron hiddenNeuron : hiddenNeurons ) {
+        for ( WorkingNeuron hiddenNeuron : this.hiddenNeurons ) {
             copy.addHiddenNeuron( (WorkingNeuron) hiddenNeuron.nameCopy() );
         }
 
-        for ( WorkingNeuron outputNeuron : outputNeurons ) {
+        for ( WorkingNeuron outputNeuron : this.outputNeurons ) {
             copy.addOutputNeuron( (WorkingNeuron) outputNeuron.nameCopy() );
         }
 
         copy.generateFullMesh();
 
-        for ( int i = 0; i < hiddenNeurons.size(); i++ ) {
-            List<Connection> connectionsOriginal = hiddenNeurons.get( i ).getConnections();
+        for ( int i = 0; i < this.hiddenNeurons.size(); i++ ) {
+            List<Connection> connectionsOriginal = this.hiddenNeurons.get( i ).getConnections();
             List<Connection> connectionsCopy = copy.hiddenNeurons.get( i ).getConnections();
             if ( connectionsOriginal.size() != connectionsCopy.size() ) {
                 throw new NotSameAmountOfNeuronsException( "Cloning the hidden neurons was not successful. Because both has not the same size." );
@@ -138,8 +138,8 @@ public class NeuralNetwork {
             }
         }
 
-        for ( int i = 0; i < outputNeurons.size(); i++ ) {
-            List<Connection> connectionsOriginal = outputNeurons.get( i ).getConnections();
+        for ( int i = 0; i < this.outputNeurons.size(); i++ ) {
+            List<Connection> connectionsOriginal = this.outputNeurons.get( i ).getConnections();
             List<Connection> connectionsCopy = copy.outputNeurons.get( i ).getConnections();
             if ( connectionsOriginal.size() != connectionsCopy.size() ) {
                 throw new NotSameAmountOfNeuronsException( "Cloning the hidden neurons was not successful. Because both has not the same size." );

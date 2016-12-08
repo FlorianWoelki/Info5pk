@@ -9,12 +9,12 @@ import java.awt.*;
  */
 public class GrassTile extends Tile {
 
-    public GrassTile(int id) {
+    public GrassTile( int id ) {
         super( id );
     }
 
     @Override
-    public void render(Graphics g, Level level, int x, int y) {
+    public void render( Graphics g, Level level, int x, int y ) {
         //int color = level.grassColor;
 
         g.setColor( Color.GREEN );

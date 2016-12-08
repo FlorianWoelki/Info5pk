@@ -22,12 +22,10 @@ public class Level {
     public int grassColor = 141;
     public int dirtColor = 322;
     public int sandColor = 550;
-    private int depth;
 
     private List<Creature> creatues = new ArrayList<>();
 
-    public Level(int width, int height, int level, Level parentLevel) {
-        this.depth = level;
+    public Level( int width, int height, int level, Level parentLevel ) {
         this.width = width;
         this.height = height;
         byte[][] maps;
@@ -36,11 +34,11 @@ public class Level {
 
         maps = LevelGenerator.createAndValidateTopMap( width, height );
 
-        this.tiles = maps[ 0 ];
-        this.data = maps[ 1 ];
+        this.tiles = maps[0];
+        this.data = maps[1];
     }
 
-    public void render(Graphics g, int xOffset, int yOffset) {
+    public void render( Graphics g, int xOffset, int yOffset ) {
         for ( int y = 0; y <= this.height; y++ ) {
             for ( int x = 0; x <= this.width; x++ ) {
                 this.getTile( x, y ).render( g, this, x + xOffset, y + yOffset );
@@ -56,9 +54,9 @@ public class Level {
         }
     }
 
-    public Tile getTile(int x, int y) {
+    public Tile getTile( int x, int y ) {
         if ( x < 0 || y < 0 || x >= this.width || y >= this.height ) return Tile.water;
-        return Tile.tiles[ this.tiles[ x + y * this.width ] ];
+        return Tile.tiles[this.tiles[x + y * this.width]];
     }
 
 }

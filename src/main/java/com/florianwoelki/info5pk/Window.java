@@ -12,10 +12,10 @@ public class Window extends JFrame {
     public static final int HEIGHT = 480;
     public static final String TITLE = "Info 5. pk";
 
-    public Window(Game game) {
-        super( TITLE );
+    public Window( Game game ) {
+        super( Window.TITLE );
 
-        Dimension size = new Dimension( WIDTH, HEIGHT );
+        Dimension size = new Dimension( Window.WIDTH, Window.HEIGHT );
         game.setPreferredSize( size );
         game.setMaximumSize( size );
         game.setMinimumSize( size );

@@ -12,10 +12,10 @@ public abstract class Neuron {
     public abstract Neuron nameCopy();
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
-    public void setName(String name) {
+    public void setName( String name ) {
         this.name = name;
     }
 

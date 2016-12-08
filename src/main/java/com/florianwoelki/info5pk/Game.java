@@ -22,35 +22,35 @@ public class Game extends Canvas implements Runnable {
     private Level level;
 
     public Game() {
-        keyboard = new Keyboard();
-        mouse = new Mouse();
+        this.keyboard = new Keyboard();
+        this.mouse = new Mouse();
 
         requestFocus();
         setFocusable( true );
-        addKeyListener( keyboard );
-        addMouseListener( mouse );
-        addMouseMotionListener( mouse );
+        addKeyListener( this.keyboard );
+        addMouseListener( this.mouse );
+        addMouseMotionListener( this.mouse );
 
         this.level = new Level( 128, 128, 1, null );
 
-        window = new Window( this );
-        window.setVisible( true );
+        this.window = new Window( this );
+        this.window.setVisible( true );
     }
 
     private synchronized void start() {
-        if ( isRunning ) return;
+        if ( this.isRunning ) return;
 
-        isRunning = true;
-        thread = new Thread( this, "Game Window" );
-        thread.start();
+        this.isRunning = true;
+        this.thread = new Thread( this, "Game Window" );
+        this.thread.start();
     }
 
     private synchronized void stop() {
-        if ( !isRunning ) return;
+        if ( !this.isRunning ) return;
 
-        isRunning = false;
+        this.isRunning = false;
         try {
-            thread.join();
+            this.thread.join();
         } catch ( InterruptedException e ) {
             e.printStackTrace();
         }
@@ -68,11 +68,11 @@ public class Game extends Canvas implements Runnable {
         while ( isRunning ) {
             boolean shouldRender = false;
             long now = System.nanoTime();
-            delta += (now - lastTime) / ns;
+            delta += ( now - lastTime ) / ns;
             lastTime = now;
             if ( delta >= 1 ) {
                 delta--;
-                update();
+                this.update();
                 ups++;
                 shouldRender = true;
             }
@@ -84,7 +84,7 @@ public class Game extends Canvas implements Runnable {
             }
 
             if ( shouldRender ) {
-                render();
+                this.render();
                 fps++;
             }
 
@@ -95,21 +95,21 @@ public class Game extends Canvas implements Runnable {
             }
         }
 
-        stop();
+        this.stop();
     }
 
     private void update() {
         this.level.update();
-        keyboard.update();
+        this.keyboard.update();
 
-        if ( keyboard.right ) {
-            x--;
-        } else if ( keyboard.left ) {
-            x++;
-        } else if ( keyboard.up ) {
-            y++;
-        } else if ( keyboard.down ) {
-            y--;
+        if ( this.keyboard.right ) {
+            this.x--;
+        } else if ( this.keyboard.left ) {
+            this.x++;
+        } else if ( this.keyboard.up ) {
+            this.y++;
+        } else if ( this.keyboard.down ) {
+            this.y--;
         }
     }
 
@@ -119,19 +119,19 @@ public class Game extends Canvas implements Runnable {
     private void render() {
         BufferStrategy bs = getBufferStrategy();
         if ( bs == null ) {
-            createBufferStrategy( 3 );
+            this.createBufferStrategy( 3 );
             return;
         }
 
         Graphics g = bs.getDrawGraphics();
         g.setColor( Color.BLACK );
-        g.fillRect( 0, 0, getWidth(), getHeight() );
-        this.level.render( g, x, y );
+        g.fillRect( 0, 0, this.getWidth(), this.getHeight() );
+        this.level.render( g, this.x, this.y );
         g.dispose();
         bs.show();
     }
 
-    public static void main(String[] args) {
+    public static void main( String[] args ) {
         Game game = new Game();
         game.start();
     }

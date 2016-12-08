@@ -8,13 +8,13 @@ public class Connection {
     public float weight = 1;
     public Neuron entryNeuron;
 
-    public Connection(Neuron entryNeuron, float weight) {
+    public Connection( Neuron entryNeuron, float weight ) {
         this.weight = weight;
         this.entryNeuron = entryNeuron;
     }
 
     public float getValue() {
-        return weight * entryNeuron.getValue();
+        return this.weight * this.entryNeuron.getValue();
     }
 
 }

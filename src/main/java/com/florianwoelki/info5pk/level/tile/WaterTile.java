@@ -9,12 +9,12 @@ import java.awt.*;
  */
 public class WaterTile extends Tile {
 
-    public WaterTile(int id) {
+    public WaterTile( int id ) {
         super( id );
     }
 
     @Override
-    public void render(Graphics g, Level level, int x, int y) {
+    public void render( Graphics g, Level level, int x, int y ) {
         // int color = level.waterColor;
 
         g.setColor( Color.BLUE );

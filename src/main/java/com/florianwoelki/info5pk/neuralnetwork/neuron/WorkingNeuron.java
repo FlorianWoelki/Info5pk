@@ -13,17 +13,17 @@ public class WorkingNeuron extends Neuron {
     private float value;
     private List<Connection> connections = new ArrayList<>();
 
-    public void addNeuronConnection(Neuron neuron, float weight) {
-        addNeuronConnection( new Connection( neuron, weight ) );
+    public void addNeuronConnection( Neuron neuron, float weight ) {
+        this.addNeuronConnection( new Connection( neuron, weight ) );
     }
 
-    private void addNeuronConnection(Connection connection) {
-        connections.add( connection );
+    private void addNeuronConnection( Connection connection ) {
+        this.connections.add( connection );
     }
 
     public void randomizeWeights() {
-        for ( Connection connection : connections ) {
-            connection.weight = (float) (MathUtil.random.nextDouble() * 2 - 1);
+        for ( Connection connection : this.connections ) {
+            connection.weight = (float) ( MathUtil.random.nextDouble() * 2 - 1 );
         }
     }
 
@@ -33,7 +33,7 @@ public class WorkingNeuron extends Neuron {
 
     private void calculate() {
         float value = 0;
-        for ( Connection connection : connections ) {
+        for ( Connection connection : this.connections ) {
             value += connection.getValue();
         }
 
@@ -43,10 +43,10 @@ public class WorkingNeuron extends Neuron {
 
     @Override
     public float getValue() {
-        if ( value == 0f ) {
+        if ( this.value == 0f ) {
             calculate();
         }
-        return value;
+        return this.value;
     }
 
     @Override
@@ -57,6 +57,6 @@ public class WorkingNeuron extends Neuron {
     }
 
     public List<Connection> getConnections() {
-        return connections;
+        return this.connections;
     }
 }

@@ -8,7 +8,7 @@ import com.florianwoelki.info5pk.neuralnetwork.neuron.WorkingNeuron;
  */
 public class NeuralNetworkTest {
 
-    public static void main(String[] args) throws Exception {
+    public static void main( String[] args ) throws Exception {
         System.out.println( "Begin Neural Network Test" );
 
         NeuralNetwork nn = new NeuralNetwork();

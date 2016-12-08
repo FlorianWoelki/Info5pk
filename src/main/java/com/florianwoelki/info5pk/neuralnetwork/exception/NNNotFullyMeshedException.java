@@ -5,7 +5,7 @@ package com.florianwoelki.info5pk.neuralnetwork.exception;
  */
 public class NNNotFullyMeshedException extends Exception {
 
-    public NNNotFullyMeshedException(String message) {
+    public NNNotFullyMeshedException( String message ) {
         super( message );
     }
 

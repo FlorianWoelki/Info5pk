@@ -21,19 +21,19 @@ public class CreatureFactory {
     private List<Creature> creatures;
 
     public CreatureFactory() {
-        creatures = new ArrayList<>();
+        this.creatures = new ArrayList<>();
     }
 
-    public void addCreature(Creature creature) {
-        creatures.add( creature );
+    public void addCreature( Creature creature ) {
+        this.creatures.add( creature );
     }
 
-    public void render(Graphics g) {
-        creatures.forEach( creature -> creature.render( g ) );
+    public void render( Graphics g ) {
+        this.creatures.forEach( creature -> creature.render( g ) );
     }
 
     public void update() {
-        creatures.forEach( creature -> creature.update() );
+        this.creatures.forEach( creature -> creature.update() );
     }
 
 }
