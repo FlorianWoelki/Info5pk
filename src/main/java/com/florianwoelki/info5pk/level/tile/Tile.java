@@ -1,5 +1,7 @@
 package com.florianwoelki.info5pk.level.tile;
 
+import com.florianwoelki.info5pk.level.Level;
+
 import java.awt.*;
 
 /**
@@ -19,7 +21,7 @@ public class Tile {
         tiles[ id ] = this;
     }
 
-    public void render(Graphics g, int x, int y) {
+    public void render(Graphics g, Level level, int x, int y) {
     }
 
     public void update() {

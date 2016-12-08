@@ -1,9 +1,8 @@
 package com.florianwoelki.info5pk;
 
-import com.florianwoelki.info5pk.creature.CreatureFactory;
-import com.florianwoelki.info5pk.creature.TestCreature;
 import com.florianwoelki.info5pk.input.Keyboard;
 import com.florianwoelki.info5pk.input.Mouse;
+import com.florianwoelki.info5pk.level.Level;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -20,6 +19,8 @@ public class Game extends Canvas implements Runnable {
     private Thread thread;
     private boolean isRunning;
 
+    private Level level;
+
     public Game() {
         keyboard = new Keyboard();
         mouse = new Mouse();
@@ -30,12 +31,10 @@ public class Game extends Canvas implements Runnable {
         addMouseListener( mouse );
         addMouseMotionListener( mouse );
 
+        this.level = new Level( 128, 128, 1, null );
+
         window = new Window( this );
         window.setVisible( true );
-
-        for ( int i = 0; i < 5; i++ ) {
-            CreatureFactory.getInstance().addCreature( new TestCreature( (float) (Math.random() * getWidth() - 8), (float) (Math.random() * getHeight() - 8), 0 ) );
-        }
     }
 
     private synchronized void start() {
@@ -100,9 +99,22 @@ public class Game extends Canvas implements Runnable {
     }
 
     private void update() {
-        CreatureFactory.getInstance().update();
+        this.level.update();
         keyboard.update();
+
+        if ( keyboard.right ) {
+            x--;
+        } else if ( keyboard.left ) {
+            x++;
+        } else if ( keyboard.up ) {
+            y++;
+        } else if ( keyboard.down ) {
+            y--;
+        }
     }
+
+    int x = 0;
+    int y = 0;
 
     private void render() {
         BufferStrategy bs = getBufferStrategy();
@@ -114,7 +126,7 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         g.setColor( Color.BLACK );
         g.fillRect( 0, 0, getWidth(), getHeight() );
-        CreatureFactory.getInstance().render( g );
+        this.level.render( g, x, y );
         g.dispose();
         bs.show();
     }
