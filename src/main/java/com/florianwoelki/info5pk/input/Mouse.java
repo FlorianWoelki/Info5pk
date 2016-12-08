@@ -3,11 +3,15 @@ package com.florianwoelki.info5pk.input;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
 /**
  * Created by Florian Woelki on 16.11.16.
  */
-public class Mouse implements MouseListener, MouseMotionListener {
+public class Mouse implements MouseListener, MouseMotionListener, MouseWheelListener {
+
+    private float mouseWheelScale = 1;
 
     @Override
     public void mouseClicked( MouseEvent e ) {
@@ -42,6 +46,16 @@ public class Mouse implements MouseListener, MouseMotionListener {
     @Override
     public void mouseMoved( MouseEvent e ) {
 
+    }
+
+    @Override
+    public void mouseWheelMoved( MouseWheelEvent e ) {
+        double delta = 0.005f * e.getPreciseWheelRotation();
+        this.mouseWheelScale += delta;
+    }
+
+    public float getMouseWheelScale() {
+        return this.mouseWheelScale;
     }
 
 }

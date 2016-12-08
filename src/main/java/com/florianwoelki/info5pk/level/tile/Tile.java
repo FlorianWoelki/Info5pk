@@ -15,6 +15,8 @@ public class Tile {
 
     public final byte id;
 
+    public float mouseWheelScale = 1;
+
     public Tile( int id ) {
         this.id = (byte) id;
         if ( Tile.tiles[id] != null ) throw new RuntimeException( "Duplicate tile ids!" );

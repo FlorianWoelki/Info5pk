@@ -38,10 +38,12 @@ public class Level {
         this.data = maps[1];
     }
 
-    public void render( Graphics g, int xOffset, int yOffset ) {
+    public void render( Graphics g, int xOffset, int yOffset, float mouseWheelScale ) {
         for ( int y = 0; y <= this.height; y++ ) {
             for ( int x = 0; x <= this.width; x++ ) {
-                this.getTile( x, y ).render( g, this, x + xOffset, y + yOffset );
+                Tile tile = this.getTile( x, y );
+                tile.mouseWheelScale = mouseWheelScale;
+                tile.render( g, this, x + xOffset, y + yOffset );
             }
         }
     }

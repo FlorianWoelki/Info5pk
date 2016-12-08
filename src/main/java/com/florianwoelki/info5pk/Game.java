@@ -25,11 +25,12 @@ public class Game extends Canvas implements Runnable {
         this.keyboard = new Keyboard();
         this.mouse = new Mouse();
 
-        requestFocus();
-        setFocusable( true );
-        addKeyListener( this.keyboard );
-        addMouseListener( this.mouse );
-        addMouseMotionListener( this.mouse );
+        this.requestFocus();
+        this.setFocusable( true );
+        this.addKeyListener( this.keyboard );
+        this.addMouseListener( this.mouse );
+        this.addMouseMotionListener( this.mouse );
+        this.addMouseWheelListener( this.mouse );
 
         this.level = new Level( 128, 128, 1, null );
 
@@ -126,7 +127,7 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         g.setColor( Color.BLACK );
         g.fillRect( 0, 0, this.getWidth(), this.getHeight() );
-        this.level.render( g, this.x, this.y );
+        this.level.render( g, this.x, this.y, this.mouse.getMouseWheelScale() );
         g.dispose();
         bs.show();
     }
