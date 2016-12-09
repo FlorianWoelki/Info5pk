@@ -94,8 +94,8 @@ public abstract class Creature {
     protected Level level;
     public float mouseWheelScale = 1;
 
-    private Color color;
-    private Color colorInv;
+    protected Color color;
+    protected Color colorInv;
 
     public Creature( Level level, float x, float y, float viewAngle ) {
         this.id = currentId++;
@@ -197,7 +197,7 @@ public abstract class Creature {
     }
 
     private void generateColorInv() {
-        this.colorInv = new Color( 255 - this.color.getRed(), 255 - this.color.getGreen() );
+        this.colorInv = new Color( 255 - this.color.getRed(), 255 - this.color.getGreen(), 255 - this.color.getBlue() );
     }
 
     private void setupVariablesFromBrain() {
