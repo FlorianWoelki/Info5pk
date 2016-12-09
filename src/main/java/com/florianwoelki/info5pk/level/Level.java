@@ -43,7 +43,7 @@ public class Level {
 
         for ( int y = 0; y < height; y++ ) {
             for ( int x = 0; x < width; x++ ) {
-                this.foodValues[x][y] = this.MAXIMUM_FOOD_PER_TILE;
+                this.foodValues[x][y] = 0f;
             }
         }
     }

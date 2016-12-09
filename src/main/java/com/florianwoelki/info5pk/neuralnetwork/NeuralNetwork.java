@@ -64,9 +64,9 @@ public class NeuralNetwork {
     public void randomMutation( float mutationRate ) {
         int index = MathUtil.random.nextInt( this.hiddenNeurons.size() + this.outputNeurons.size() );
         if ( index < this.hiddenNeurons.size() ) {
-            ( (WorkingNeuron) this.hiddenNeurons.get( index ) ).randomMutation( mutationRate );
+            this.hiddenNeurons.get( index ).randomMutation( mutationRate );
         } else {
-            ( (WorkingNeuron) this.outputNeurons.get( index - this.hiddenNeurons.size() ) ).randomMutation( mutationRate );
+            this.outputNeurons.get( index - this.hiddenNeurons.size() ).randomMutation( mutationRate );
         }
     }
 
@@ -86,6 +86,10 @@ public class NeuralNetwork {
         }
     }
 
+    public InputNeuron getInputNeuronFromIndex( int index ) {
+        return this.inputNeurons.get( index );
+    }
+
     public InputNeuron getInputNeuronFromName( String name ) {
         for ( InputNeuron neuron : this.inputNeurons ) {
             if ( name.equals( neuron.getName() ) ) {
@@ -93,6 +97,10 @@ public class NeuralNetwork {
             }
         }
         return null;
+    }
+
+    public WorkingNeuron getHiddenNeuronFromIndex( int index ) {
+        return this.hiddenNeurons.get( index );
     }
 
     public WorkingNeuron getHiddenNeuronFromName( String name ) {

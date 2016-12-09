@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class WorkingNeuron extends Neuron {
 
-    private Float value;
+    private Float value = null  ;
     private List<Connection> connections = new ArrayList<>();
 
     public void randomMutation( float mutationRate ) {

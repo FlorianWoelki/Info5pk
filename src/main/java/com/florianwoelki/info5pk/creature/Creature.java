@@ -8,11 +8,23 @@ import com.florianwoelki.info5pk.neuralnetwork.neuron.InputNeuron;
 import com.florianwoelki.info5pk.neuralnetwork.neuron.WorkingNeuron;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by Florian Woelki on 16.11.16.
  */
 public abstract class Creature {
+
+    public static int maximumGeneration = 1;
+    public static int currentId;
+    public static Creature oldestCreatureEver = new TestCreature( null, 0, 0, 0 );
+
+    public java.util.List<Creature> children = new ArrayList<>();
+    private long motherId;
+    private long id;
+    private java.util.List<Long> childIds = new ArrayList<>();
+    protected Creature mother;
+    protected int generation = 1;
 
     protected final float COST_EAT = 0.1f;
     protected final float GAIN_EAT = 1f;
@@ -27,8 +39,8 @@ public abstract class Creature {
     protected final float START_ENERGY = 150;
     protected final float MINIMUM_SURVIVAL_ENERGY = 100;
 
-    protected final int SIZE = 16;
-    protected final int FEELER_SIZE = 10;
+    protected final int SIZE = 8;
+    protected final int FEELER_SIZE = 4;
 
     protected float x;
     protected float y;
@@ -82,10 +94,12 @@ public abstract class Creature {
     protected Level level;
     public float mouseWheelScale = 1;
 
-    protected Creature mother;
-    protected int generation = 1;
+    protected Color color;
+    protected Color colorInv;
 
     public Creature( Level level, float x, float y, float viewAngle ) {
+        this.id = currentId++;
+
         this.level = level;
         this.x = x;
         this.y = y;
@@ -136,12 +150,20 @@ public abstract class Creature {
         this.brain.randomizeAllWeights();
 
         this.calculateFeelerPosition();
+
+        this.color = new Color( (float) MathUtil.random.nextDouble(), (float) MathUtil.random.nextDouble(), (float) MathUtil.random.nextDouble() );
+        this.generateColorInv();
     }
 
     public Creature( Level level, Creature mother ) {
+        this.id = currentId++;
+
         this.level = level;
         this.mother = mother;
         this.generation = mother.generation + 1;
+        if ( this.generation > maximumGeneration ) {
+            maximumGeneration = this.generation;
+        }
         this.x = mother.x;
         this.y = mother.y;
         this.viewAngle = (float) ( MathUtil.random.nextDouble() * MathUtil.PI * 2 );
@@ -157,6 +179,25 @@ public abstract class Creature {
         for ( int i = 0; i < 10; i++ ) {
             this.brain.randomMutation( 0.1f );
         }
+
+        float r = mother.color.getRed() / 255f;
+        float g = mother.color.getGreen() / 255f;
+        float b = mother.color.getBlue() / 255f;
+
+        r += (float) MathUtil.random.nextDouble() * 0.1f - 0.05f;
+        g += (float) MathUtil.random.nextDouble() * 0.1f - 0.05f;
+        b += (float) MathUtil.random.nextDouble() * 0.1f - 0.05f;
+
+        r = MathUtil.clamp( r );
+        g = MathUtil.clamp( g );
+        b = MathUtil.clamp( b );
+
+        this.color = new Color( r, g, b );
+        this.generateColorInv();
+    }
+
+    private void generateColorInv() {
+        this.colorInv = new Color( 255 - this.color.getRed(), 255 - this.color.getGreen(), 255 - this.color.getBlue() );
     }
 
     private void setupVariablesFromBrain() {
@@ -208,6 +249,10 @@ public abstract class Creature {
 
         this.age += this.level.TIME_PER_TICK;
 
+        if ( this.age > oldestCreatureEver.age ) {
+            oldestCreatureEver = this;
+        }
+
         // TODO: Implement attack
         if ( this.energy < 100 || Float.isNaN( this.energy ) ) {
             this.kill( tile );
@@ -215,10 +260,6 @@ public abstract class Creature {
     }
 
     private void kill( Tile tile ) {
-        if ( tile.isGrass() ) {
-            this.level.foodValues[(int) this.x / 16][(int) this.y / 16] += this.energy * this.FOOD_DROP_PERCENTAGE;
-        }
-
         this.level.creatureFactory.removeCreature( this );
     }
 
@@ -281,6 +322,8 @@ public abstract class Creature {
     }
 
     private void giveBirth() {
+        Creature child = new TestCreature( this.level, this );
+        this.children.add( child );
         this.level.creatureFactory.addCreature( new TestCreature( this.level, this ) );
         this.energy -= this.START_ENERGY;
     }
@@ -291,8 +334,8 @@ public abstract class Creature {
 
     private void calculateFeelerPosition() {
         float angle = this.feelerAngle + this.viewAngle;
-        float x = MathUtil.sin( angle ) * 50;
-        float y = MathUtil.cos( angle ) * 50;
+        float x = MathUtil.sin( angle ) * 12;
+        float y = MathUtil.cos( angle ) * 12;
         this.feelerX = this.x + x;
         this.feelerY = this.y + y;
     }

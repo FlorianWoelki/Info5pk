@@ -21,6 +21,9 @@ public class CreatureFactory {
     private List<Creature> toRemoveCreatures;
     private List<Creature> toSpawnCreatures;
 
+    public List<Float> aliveCreaturesRecord = new ArrayList<>();
+    public List<Float> averageDeathAgeRecord = new ArrayList<>();
+
     private Creature oldestCreatureAlive;
     private Creature selectedCreature;
 
@@ -59,22 +62,33 @@ public class CreatureFactory {
         g.setColor( Color.RED );
         g.drawString( "Creatures: " + this.creatures.size(), 20, 20 );
         g.drawString( "Deaths: " + this.numberOfDeaths, 20, 40 );
-        g.drawString( "Year: " + this.year, 20, 60 );
-        g.drawString( "Oldest Creature Alive: " + this.oldestCreatureAlive.age, 20, 80 );
+        g.drawString( "Maximum Generation: " + Creature.maximumGeneration, 20, 60 );
+        g.drawString( "Year: " + this.year, 20, 80 );
+        g.drawString( "Oldest Creature Ever: " + Creature.oldestCreatureEver.age, 20, 100 );
+        g.drawString( "Oldest Creature Alive: " + this.oldestCreatureAlive.age, 20, 120 );
+        if ( this.averageAgeOfLastCreaturesAccurate ) {
+            float averageDeathAge = calculateAverageAgeOfLastDeadCreatures();
+            this.averageDeathAgeRecord.add( averageDeathAge );
+            g.setColor( Color.RED );
+            g.drawString( "Average Death Age: " + averageDeathAge, 20, 140 );
+        }
 
         if ( this.selectedCreature != null ) {
             g.setColor( new Color( 0, 0, 0, 0.5f ) );
             g.fillRect( 800, 0, 500, 400 );
             g.setColor( Color.RED );
-            g.drawString( "Selected Creature: ", 820, 50 );
-            g.drawString( "Age: " + this.selectedCreature.age, 820, 70 );
-            g.drawString( "Energy: " + this.selectedCreature.energy, 820, 90 );
+            g.drawString( "Selected Creature: ", 820, 20 );
+            g.drawString( "Age: " + this.selectedCreature.age, 820, 40 );
+            g.drawString( "Energy: " + this.selectedCreature.energy, 820, 60 );
+            g.drawString( "Children Count: " + this.selectedCreature.children.size(), 820, 80 );
+            g.drawString( "Generation: " + this.selectedCreature.generation, 820, 100 );
+            g.drawString( "Alive: " + ( this.selectedCreature.energy > 100 ? "Alive" : "Dead" ), 820, 120 );
             this.selectedCreature.brain.render( g, new Rectangle( 950, 160, 200, 200 ) );
         }
     }
 
     public void update() {
-        if ( this.creatures.size() < 1 ) {
+        if ( this.creatures.size() < 50 ) {
             int x;
             int y;
 
@@ -115,12 +129,20 @@ public class CreatureFactory {
         this.selectedCreature = this.oldestCreatureAlive;
     }
 
-    public void addDeathAge( float age ) {
-        CreatureFactory.averageAgeOfLastCreatures[indexForAverageAgeOfLastCreatures++] = age;
-        if ( indexForAverageAgeOfLastCreatures >= CreatureFactory.averageAgeOfLastCreatures.length ) {
-            indexForAverageAgeOfLastCreatures = 0;
+    private void addDeathAge( float age ) {
+        CreatureFactory.averageAgeOfLastCreatures[this.indexForAverageAgeOfLastCreatures++] = age;
+        if ( this.indexForAverageAgeOfLastCreatures >= CreatureFactory.averageAgeOfLastCreatures.length ) {
+            this.indexForAverageAgeOfLastCreatures = 0;
             this.averageAgeOfLastCreaturesAccurate = true;
         }
+    }
+
+    private float calculateAverageAgeOfLastDeadCreatures() {
+        float ageAverage = 0;
+        for ( int i = 0; i < averageAgeOfLastCreatures.length; i++ ) {
+            ageAverage += averageAgeOfLastCreatures[i];
+        }
+        return ageAverage / averageAgeOfLastCreatures.length;
     }
 
 }
