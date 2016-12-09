@@ -56,6 +56,10 @@ public class MathUtil {
         return value;
     }
 
+    public static float max( float a, float b ) {
+        return a > b ? a : b;
+    }
+
     public static float clampNegativePosition( float value ) {
         if ( value < -1 ) return -1;
         if ( value > 1 ) return 1;

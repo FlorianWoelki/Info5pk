@@ -11,7 +11,7 @@ import java.awt.geom.AffineTransform;
 public class WaterTile extends Tile {
 
     public WaterTile( int id ) {
-        super( id );
+        super( id, 0f );
     }
 
     @Override

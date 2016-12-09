@@ -8,8 +8,8 @@ import java.awt.*;
  */
 public class Window extends JFrame {
 
-    public static final int WIDTH = 640;
-    public static final int HEIGHT = 480;
+    public static final int WIDTH = 1280;
+    public static final int HEIGHT = 720;
     public static final String TITLE = "Info 5. pk";
 
     public Window( Game game ) {

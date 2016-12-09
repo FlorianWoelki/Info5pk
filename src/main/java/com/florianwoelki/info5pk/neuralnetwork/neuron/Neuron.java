@@ -7,6 +7,9 @@ public abstract class Neuron {
 
     private String name = "no name";
 
+    public float drawX;
+    public float drawY;
+
     public abstract float getValue();
 
     public abstract Neuron nameCopy();

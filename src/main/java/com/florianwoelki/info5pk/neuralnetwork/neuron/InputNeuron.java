@@ -5,14 +5,18 @@ package com.florianwoelki.info5pk.neuralnetwork.neuron;
  */
 public class InputNeuron extends Neuron {
 
-    private float value;
+    private Float value;
 
-    public void setValue( float value ) {
+    public void setValue( Float value ) {
         this.value = value;
     }
 
     @Override
     public float getValue() {
+        if ( this.value == null ) {
+            return 0f;
+        }
+
         return this.value;
     }
 

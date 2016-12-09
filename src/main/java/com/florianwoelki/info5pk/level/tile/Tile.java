@@ -15,10 +15,12 @@ public class Tile {
 
     public final byte id;
 
-    public float mouseWheelScale = 1;
+    public float mouseWheelScale = 0.5f;
+    public float food;
 
-    public Tile( int id ) {
+    public Tile( int id, float food ) {
         this.id = (byte) id;
+        this.food = food;
         if ( Tile.tiles[id] != null ) throw new RuntimeException( "Duplicate tile ids!" );
         Tile.tiles[id] = this;
     }
@@ -27,6 +29,14 @@ public class Tile {
     }
 
     public void update() {
+    }
+
+    public boolean isGrass() {
+        return this.id == Tile.grass.id;
+    }
+
+    public boolean isWater() {
+        return this.id == Tile.water.id;
     }
 
 }

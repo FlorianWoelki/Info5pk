@@ -14,8 +14,8 @@ public class TestCreature extends Creature {
         super( level, x, y, viewAngle );
     }
 
-    public TestCreature( Creature mother ) {
-        super( mother );
+    public TestCreature( Level level, Creature mother ) {
+        super( level, mother );
     }
 
     @Override
@@ -32,9 +32,12 @@ public class TestCreature extends Creature {
         g2d.setTransform( at );
 
         g2d.setColor( Color.WHITE );
-        g2d.fillRect( (int) this.x + xOffset * 16, (int) this.y + yOffset * 16, this.SIZE, this.SIZE );
+        g2d.drawLine( (int) this.x + xOffset * 16, (int) this.y + yOffset * 16, (int) this.feelerX + xOffset * 16, (int) this.feelerY + yOffset * 16 );
+
+        g2d.setColor( Color.WHITE );
+        g2d.fillRect( (int) this.x + xOffset * 16 - 8, (int) this.y + yOffset * 16 - 8, this.SIZE, this.SIZE );
         g2d.setColor( Color.RED );
-        g2d.fillRect( (int) this.feelerX + xOffset * 16, (int) this.feelerY + yOffset * 16, this.FEELER_SIZE, this.FEELER_SIZE );
+        g2d.fillRect( (int) this.feelerX + xOffset * 16 - 5, (int) this.feelerY + yOffset * 16 - 5, this.FEELER_SIZE, this.FEELER_SIZE );
 
         g2d.dispose();
     }

@@ -10,8 +10,13 @@ import java.util.List;
  */
 public class WorkingNeuron extends Neuron {
 
-    private float value;
+    private Float value;
     private List<Connection> connections = new ArrayList<>();
+
+    public void randomMutation( float mutationRate ) {
+        Connection connection = this.connections.get( MathUtil.random.nextInt( this.connections.size() ) );
+        connection.weight += (float) MathUtil.random.nextDouble() * 2 * mutationRate - mutationRate;
+    }
 
     public void addNeuronConnection( Neuron neuron, float weight ) {
         this.addNeuronConnection( new Connection( neuron, weight ) );
@@ -21,14 +26,14 @@ public class WorkingNeuron extends Neuron {
         this.connections.add( connection );
     }
 
+    public void invalidate() {
+        this.value = null;
+    }
+
     public void randomizeWeights() {
         for ( Connection connection : this.connections ) {
             connection.weight = (float) ( MathUtil.random.nextDouble() * 2 - 1 );
         }
-    }
-
-    public void invalidate() {
-        value = 0f;
     }
 
     private void calculate() {
@@ -43,7 +48,7 @@ public class WorkingNeuron extends Neuron {
 
     @Override
     public float getValue() {
-        if ( this.value == 0f ) {
+        if ( this.value == null ) {
             calculate();
         }
         return this.value;
@@ -54,6 +59,17 @@ public class WorkingNeuron extends Neuron {
         WorkingNeuron clone = new WorkingNeuron();
         clone.setName( getName() );
         return clone;
+    }
+
+    public float getStrongestConnection() {
+        float strongest = 0;
+        for ( Connection connection : this.connections ) {
+            float val = MathUtil.abs( connection.weight );
+            if ( val > strongest ) {
+                strongest = val;
+            }
+        }
+        return strongest;
     }
 
     public List<Connection> getConnections() {
