@@ -334,8 +334,8 @@ public abstract class Creature {
 
     private void calculateFeelerPosition() {
         float angle = this.feelerAngle + this.viewAngle;
-        float x = MathUtil.sin( angle ) * 17;
-        float y = MathUtil.cos( angle ) * 17;
+        float x = MathUtil.sin( angle ) * 15;
+        float y = MathUtil.cos( angle ) * 15;
         this.feelerX = this.x + x;
         this.feelerY = this.y + y;
     }
