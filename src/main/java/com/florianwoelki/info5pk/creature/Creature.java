@@ -94,8 +94,8 @@ public abstract class Creature {
     protected Level level;
     public float mouseWheelScale = 1;
 
-    protected Color color;
-    protected Color colorInv;
+    private Color color;
+    private Color colorInv;
 
     public Creature( Level level, float x, float y, float viewAngle ) {
         this.id = currentId++;
@@ -197,7 +197,7 @@ public abstract class Creature {
     }
 
     private void generateColorInv() {
-        this.colorInv = new Color( 255 - this.color.getRed(), 255 - this.color.getGreen(), 255 - this.color.getBlue() );
+        this.colorInv = new Color( 255 - this.color.getRed(), 255 - this.color.getGreen() );
     }
 
     private void setupVariablesFromBrain() {
@@ -334,8 +334,8 @@ public abstract class Creature {
 
     private void calculateFeelerPosition() {
         float angle = this.feelerAngle + this.viewAngle;
-        float x = MathUtil.sin( angle ) * 15;
-        float y = MathUtil.cos( angle ) * 15;
+        float x = MathUtil.sin( angle ) * 12;
+        float y = MathUtil.cos( angle ) * 12;
         this.feelerX = this.x + x;
         this.feelerY = this.y + y;
     }
