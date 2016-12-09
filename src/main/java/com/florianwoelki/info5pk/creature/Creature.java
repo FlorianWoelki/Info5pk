@@ -65,6 +65,7 @@ public abstract class Creature {
     protected final String NAME_IN_WAS_ATTACKED = "Was Attacked";
     protected final String NAME_IN_WATER_ON_FEELER = "Water On Feeler";
     protected final String NAME_IN_WATER_ON_CREATURE = "Water On Creature";
+    protected final String NAME_IN_MEMORY1 = "Input Memory #1";
 
     protected final String NAME_OUT_BIRTH = "Birth";
     protected final String NAME_OUT_ROTATE = "Rotate";
@@ -72,6 +73,7 @@ public abstract class Creature {
     protected final String NAME_OUT_FEELER_ANGLE = "Feeler Angle";
     protected final String NAME_OUT_ATTACK = "Attack";
     protected final String NAME_OUT_EAT = "Eat";
+    protected final String NAME_OUT_MEMORY1 = "Output Memory #1";
 
     protected InputNeuron inBias = new InputNeuron();
     protected InputNeuron inFoodValuePosition = new InputNeuron();
@@ -83,6 +85,7 @@ public abstract class Creature {
     protected InputNeuron inWasAttacked = new InputNeuron();
     protected InputNeuron inWaterOnFeeler = new InputNeuron();
     protected InputNeuron inWaterOnCreature = new InputNeuron();
+    protected InputNeuron inMemory1 = new InputNeuron();
 
     protected WorkingNeuron outBirth = new WorkingNeuron();
     protected WorkingNeuron outRotate = new WorkingNeuron();
@@ -90,6 +93,7 @@ public abstract class Creature {
     protected WorkingNeuron outFeelerAngle = new WorkingNeuron();
     protected WorkingNeuron outAttack = new WorkingNeuron();
     protected WorkingNeuron outEat = new WorkingNeuron();
+    protected WorkingNeuron outMemory1 = new WorkingNeuron();
 
     protected Level level;
     public float mouseWheelScale = 1;
@@ -115,6 +119,7 @@ public abstract class Creature {
         this.inWasAttacked.setName( this.NAME_IN_WAS_ATTACKED );
         this.inWaterOnFeeler.setName( this.NAME_IN_WATER_ON_FEELER );
         this.inWaterOnCreature.setName( this.NAME_IN_WATER_ON_CREATURE );
+        this.inMemory1.setName( this.NAME_IN_MEMORY1 );
 
         this.outBirth.setName( this.NAME_OUT_BIRTH );
         this.outRotate.setName( this.NAME_OUT_ROTATE );
@@ -122,6 +127,7 @@ public abstract class Creature {
         this.outFeelerAngle.setName( this.NAME_OUT_FEELER_ANGLE );
         this.outAttack.setName( this.NAME_OUT_ATTACK );
         this.outEat.setName( this.NAME_OUT_EAT );
+        this.outMemory1.setName( this.NAME_OUT_MEMORY1 );
 
         this.brain = new NeuralNetwork();
 
@@ -135,6 +141,7 @@ public abstract class Creature {
         this.brain.addInputNeuron( this.inWasAttacked );
         this.brain.addInputNeuron( this.inWaterOnFeeler );
         this.brain.addInputNeuron( this.inWaterOnCreature );
+        this.brain.addInputNeuron( this.inMemory1 );
 
         this.brain.generateHiddenNeurons( 10 );
 
@@ -144,6 +151,7 @@ public abstract class Creature {
         this.brain.addOutputNeuron( this.outFeelerAngle );
         this.brain.addOutputNeuron( this.outAttack );
         this.brain.addOutputNeuron( this.outEat );
+        this.brain.addOutputNeuron( this.outMemory1 );
 
         this.brain.generateFullMesh();
 
@@ -211,6 +219,7 @@ public abstract class Creature {
         this.inWasAttacked = this.brain.getInputNeuronFromName( this.NAME_IN_WAS_ATTACKED );
         this.inWaterOnFeeler = this.brain.getInputNeuronFromName( this.NAME_IN_WATER_ON_FEELER );
         this.inWaterOnCreature = this.brain.getInputNeuronFromName( this.NAME_IN_WATER_ON_CREATURE );
+        this.inMemory1 = this.brain.getInputNeuronFromName( this.NAME_IN_MEMORY1 );
 
         this.outBirth = this.brain.getOutputNeuronFromName( this.NAME_OUT_BIRTH );
         this.outRotate = this.brain.getOutputNeuronFromName( this.NAME_OUT_ROTATE );
@@ -218,9 +227,12 @@ public abstract class Creature {
         this.outFeelerAngle = this.brain.getOutputNeuronFromName( this.NAME_OUT_FEELER_ANGLE );
         this.outAttack = this.brain.getOutputNeuronFromName( this.NAME_OUT_ATTACK );
         this.outEat = this.brain.getOutputNeuronFromName( this.NAME_OUT_EAT );
+        this.outMemory1 = this.brain.getOutputNeuronFromName( this.NAME_OUT_MEMORY1 );
     }
 
     public void readSensors() {
+        this.inMemory1.setValue( this.outMemory1.getValue() );
+
         this.brain.invalidate();
 
         Tile creatureTile = this.level.getTile( (int) this.x / 16, (int) this.y / 16 );
