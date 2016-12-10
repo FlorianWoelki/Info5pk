@@ -59,7 +59,6 @@ public abstract class Creature {
     protected final String NAME_IN_BIAS = "bias";
     protected final String NAME_IN_FOOD_VALUE_POSITION = "Food Value Position";
     protected final String NAME_IN_FOOD_VALUE_FEELER = "Food Value Feeler";
-    protected final String NAME_IN_OCCLUSION_FEELER = "Occlusion Feeler";
     protected final String NAME_IN_ENERGY = "Energy";
     protected final String NAME_IN_AGE = "Age";
     protected final String NAME_IN_WATER_ON_FEELER = "Water On Feeler";
@@ -76,7 +75,6 @@ public abstract class Creature {
     protected InputNeuron inBias = new InputNeuron();
     protected InputNeuron inFoodValuePosition = new InputNeuron();
     protected InputNeuron inFoodValueFeeler = new InputNeuron();
-    protected InputNeuron inOcclusionFeeler = new InputNeuron();
     protected InputNeuron inEnergy = new InputNeuron();
     protected InputNeuron inAge = new InputNeuron();
     protected InputNeuron inWaterOnFeeler = new InputNeuron();
@@ -109,7 +107,6 @@ public abstract class Creature {
         this.inBias.setName( this.NAME_IN_BIAS );
         this.inFoodValuePosition.setName( this.NAME_IN_FOOD_VALUE_POSITION );
         this.inFoodValueFeeler.setName( this.NAME_IN_FOOD_VALUE_FEELER );
-        this.inOcclusionFeeler.setName( this.NAME_IN_OCCLUSION_FEELER );
         this.inEnergy.setName( this.NAME_IN_ENERGY );
         this.inAge.setName( this.NAME_IN_AGE );
         this.inWaterOnFeeler.setName( this.NAME_IN_WATER_ON_FEELER );
@@ -136,7 +133,6 @@ public abstract class Creature {
         this.brain.addInputNeuron( this.inBias );
         this.brain.addInputNeuron( this.inFoodValuePosition );
         this.brain.addInputNeuron( this.inFoodValueFeeler );
-        this.brain.addInputNeuron( this.inOcclusionFeeler );
         this.brain.addInputNeuron( this.inEnergy );
         this.brain.addInputNeuron( this.inAge );
         this.brain.addInputNeuron( this.inWaterOnFeeler );
@@ -272,7 +268,6 @@ public abstract class Creature {
         this.inBias = this.brain.getInputNeuronFromName( this.NAME_IN_BIAS );
         this.inFoodValuePosition = this.brain.getInputNeuronFromName( this.NAME_IN_FOOD_VALUE_POSITION );
         this.inFoodValueFeeler = this.brain.getInputNeuronFromName( this.NAME_IN_FOOD_VALUE_FEELER );
-        this.inOcclusionFeeler = this.brain.getInputNeuronFromName( this.NAME_IN_OCCLUSION_FEELER );
         this.inEnergy = this.brain.getInputNeuronFromName( this.NAME_IN_ENERGY );
         this.inAge = this.brain.getInputNeuronFromName( this.NAME_IN_AGE );
         this.inWaterOnFeeler = this.brain.getInputNeuronFromName( this.NAME_IN_WATER_ON_FEELER );
@@ -304,7 +299,6 @@ public abstract class Creature {
         this.inBias.setValue( 1f );
         this.inFoodValuePosition.setValue( creatureTile.food / this.level.MAXIMUM_FOOD_PER_TILE );
         this.inFoodValueFeeler.setValue( feelerTile.food / this.level.MAXIMUM_FOOD_PER_TILE );
-        this.inOcclusionFeeler.setValue( 0f ); // TODO: Find real value
         this.inEnergy.setValue( ( this.energy - this.MINIMUM_SURVIVAL_ENERGY ) / ( this.START_ENERGY - this.MINIMUM_SURVIVAL_ENERGY ) );
         this.inAge.setValue( this.age / 10f );
         this.inWaterOnFeeler.setValue( feelerTile.isGrass() ? 0f : 1f );

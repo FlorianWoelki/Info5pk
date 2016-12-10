@@ -13,8 +13,6 @@ import java.util.List;
  */
 public class CreatureFactory {
 
-    public static final int COLLISION_GRID_SIZE = 300;
-
     public static float[] averageAgeOfLastCreatures = new float[128];
     private int indexForAverageAgeOfLastCreatures = 0;
     private boolean averageAgeOfLastCreaturesAccurate = false;
