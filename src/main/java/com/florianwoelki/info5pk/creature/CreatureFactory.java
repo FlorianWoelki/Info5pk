@@ -50,10 +50,11 @@ public class CreatureFactory {
     }
 
     public void render( Graphics g, int xOffset, int yOffset, float mouseWheelScale ) {
-        this.creatures.forEach( creature -> {
+        for ( Creature creature : this.creatures ) {
             creature.mouseWheelScale = mouseWheelScale;
             creature.render( g, xOffset, yOffset );
-        } );
+
+        }
 
         this.renderGeneralStats( g );
     }
@@ -103,13 +104,15 @@ public class CreatureFactory {
             this.addCreature( creature );
         }
 
-        this.creatures.forEach( Creature::update );
+        for ( Creature creature : this.creatures ) {
+            creature.update();
+        }
 
         this.numberOfDeaths += this.toRemoveCreatures.size();
-        this.toRemoveCreatures.forEach( creature -> {
+        for ( Creature creature : this.toRemoveCreatures ) {
             this.addDeathAge( creature.age );
             this.creatures.remove( creature );
-        } );
+        }
         this.toRemoveCreatures.clear();
 
         for ( Creature creature : this.toSpawnCreatures ) {
@@ -121,11 +124,11 @@ public class CreatureFactory {
 
         if ( this.creatures.size() > 0 ) {
             this.oldestCreatureAlive = this.creatures.get( 0 );
-            this.creatures.forEach( creature -> {
+            for ( Creature creature : this.creatures ) {
                 if ( creature.age > this.oldestCreatureAlive.age ) {
                     this.oldestCreatureAlive = creature;
                 }
-            } );
+            }
         }
 
         this.selectedCreature = this.oldestCreatureAlive;
