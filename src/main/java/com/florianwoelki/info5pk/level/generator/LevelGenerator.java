@@ -89,11 +89,7 @@ public class LevelGenerator {
     }
 
     private static byte[][] createTopMap( int w, int h ) {
-        LevelGenerator mnoise1 = new LevelGenerator( w, h, 32 );
-        LevelGenerator mnoise2 = new LevelGenerator( w, h, 32 );
-        LevelGenerator mnoise3 = new LevelGenerator( w, h, 32 );
-
-        LevelGenerator noise1 = new LevelGenerator( w, h, 8 );
+        LevelGenerator noise1 = new LevelGenerator( w, h, 32 );
         LevelGenerator noise2 = new LevelGenerator( w, h, 32 );
 
         byte[] map = new byte[w * h];
@@ -103,8 +99,6 @@ public class LevelGenerator {
                 int i = x + y * w;
 
                 double val = Math.abs( noise1.values[i] - noise2.values[i] ) * 3 - 2;
-                double mval = Math.abs( mnoise1.values[i] - mnoise2.values[i] );
-                mval = Math.abs( mval - mnoise3.values[i] ) * 3 - 2;
 
                 double xd = x / ( w - 1.0 ) * 2 - 1;
                 double yd = y / ( h - 1.0 ) * 2 - 1;
@@ -115,10 +109,8 @@ public class LevelGenerator {
                 dist = dist * dist * dist * dist;
                 val = val + 1 - dist * 20;
 
-                if ( val < -0.25 ) {
+                if ( val < -0.5 ) {
                     map[i] = Tile.water.id;
-                } else if ( val > 0.5 && mval < -1.2 ) {
-                    map[i] = Tile.grass.id;
                 } else {
                     map[i] = Tile.grass.id;
                 }

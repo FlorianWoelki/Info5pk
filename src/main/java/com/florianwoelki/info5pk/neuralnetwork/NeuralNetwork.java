@@ -35,6 +35,40 @@ public class NeuralNetwork {
         this.outputNeurons.add( workingNeuron );
     }
 
+    public void addInputNeuronAndMesh( InputNeuron inputNeuron ) {
+        this.inputNeurons.add( inputNeuron );
+        for ( WorkingNeuron wn : this.hiddenNeurons ) {
+            wn.addNeuronConnection( new Connection( inputNeuron, 0 ) );
+        }
+    }
+
+    public void addOutputNeuronAndMesh( WorkingNeuron workingNeuron ) {
+        this.outputNeurons.add( workingNeuron );
+        for ( WorkingNeuron wn : this.hiddenNeurons ) {
+            workingNeuron.addNeuronConnection( new Connection( wn, 0 ) );
+        }
+    }
+
+    public void removeInputNeuron( InputNeuron inputNeuron ) {
+        this.inputNeurons.remove( inputNeuron );
+        for ( WorkingNeuron wn : this.hiddenNeurons ) {
+            List<Connection> connectionsToRemove = new ArrayList<>();
+            for ( Connection connection : wn.getConnections() ) {
+                if ( connection.entryNeuron == inputNeuron ) {
+                    connectionsToRemove.add( connection );
+                }
+            }
+
+            for ( Connection connection : connectionsToRemove ) {
+                wn.getConnections().remove( connection );
+            }
+        }
+    }
+
+    public void removeOutputNeuron( WorkingNeuron workingNeuron ) {
+        this.outputNeurons.remove( workingNeuron );
+    }
+
     public void generateHiddenNeurons( int amount ) {
         for ( int i = 0; i < amount; i++ ) {
             this.hiddenNeurons.add( new WorkingNeuron() );

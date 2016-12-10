@@ -13,6 +13,8 @@ import java.util.List;
  */
 public class CreatureFactory {
 
+    public static final int COLLISION_GRID_SIZE = 300;
+
     public static float[] averageAgeOfLastCreatures = new float[128];
     private int indexForAverageAgeOfLastCreatures = 0;
     private boolean averageAgeOfLastCreaturesAccurate = false;
@@ -75,7 +77,7 @@ public class CreatureFactory {
 
         if ( this.selectedCreature != null ) {
             g.setColor( new Color( 0, 0, 0, 0.5f ) );
-            g.fillRect( 800, 0, 500, 400 );
+            g.fillRect( 800, 0, 500, 450 + this.selectedCreature.amountOfMemory * this.selectedCreature.SIZE );
             g.setColor( Color.RED );
             g.drawString( "Selected Creature: ", 820, 20 );
             g.drawString( "Age: " + this.selectedCreature.age, 820, 40 );
@@ -83,7 +85,7 @@ public class CreatureFactory {
             g.drawString( "Children Count: " + this.selectedCreature.children.size(), 820, 80 );
             g.drawString( "Generation: " + this.selectedCreature.generation, 820, 100 );
             g.drawString( "Alive: " + ( this.selectedCreature.energy > 100 ? "Alive" : "Dead" ), 820, 120 );
-            this.selectedCreature.brain.render( g, new Rectangle( 950, 160, 200, 200 ) );
+            this.selectedCreature.brain.render( g, new Rectangle( 950, 160, 200, 250 + this.selectedCreature.amountOfMemory * this.selectedCreature.SIZE ) );
         }
     }
 

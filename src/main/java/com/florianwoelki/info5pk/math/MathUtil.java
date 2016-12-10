@@ -45,9 +45,10 @@ public class MathUtil {
         return et / ( 1 + et );
     }
 
-    public static float interpolateCosine( float a, float b, float t ) {
-        float t2 = ( 1 - cos( t * PI ) ) / 2;
-        return ( a * ( 1 - t2 ) + b * t2 );
+    public static int clampColorValue( int val ) {
+        if ( val < 0 ) return 0;
+        if ( val > 255 ) return 255;
+        return val;
     }
 
     public static float clamp( float value ) {

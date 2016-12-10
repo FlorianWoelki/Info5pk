@@ -22,7 +22,7 @@ public class WorkingNeuron extends Neuron {
         this.addNeuronConnection( new Connection( neuron, weight ) );
     }
 
-    private void addNeuronConnection( Connection connection ) {
+    public void addNeuronConnection( Connection connection ) {
         this.connections.add( connection );
     }
 
