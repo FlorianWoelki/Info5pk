@@ -5,6 +5,7 @@ import com.florianwoelki.info5pk.level.generator.LevelGenerator;
 import com.florianwoelki.info5pk.level.tile.Tile;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by Florian Woelki on 19.11.16.
@@ -20,6 +21,15 @@ public class Level {
     public byte[] tiles;
     public float[][] foodValues;
 
+<<<<<<< HEAD
+=======
+    public int grassColor = 141;
+    public int dirtColor = 322;
+    public int sandColor = 550;
+
+    public java.util.List<Float> foodRecord = new ArrayList<>();
+
+>>>>>>> origin/master
     public CreatureFactory creatureFactory;
 
     public Level( int width, int height ) {
@@ -92,6 +102,8 @@ public class Level {
         }
 
         this.creatureFactory.update();
+
+        this.foodRecord.add( this.calculateFoodAvailable() );
     }
 
     private void grow( int x, int y ) {
@@ -135,6 +147,26 @@ public class Level {
         return false;
     }
 
+<<<<<<< HEAD
+=======
+    public float calculateFoodAvailable() {
+        float food = 0;
+        for ( int y = 0; y < this.height; y++ ) {
+            for ( int x = 0; x < this.width; x++ ) {
+                food += this.foodValues[x][y];
+            }
+        }
+        return food;
+    }
+
+    public void setTile( int x, int y, Tile tile ) {
+        Tile.tiles[this.tiles[x + y * this.width]] = tile;
+        if ( !tile.isGrass() ) {
+            this.foodValues[x][y] = 0;
+        }
+    }
+
+>>>>>>> origin/master
     public Tile getTile( int x, int y ) {
         if ( x < 0 || y < 0 || x >= this.width || y >= this.height ) return Tile.water;
         return Tile.tiles[this.tiles[x + y * this.width]];
