@@ -11,7 +11,7 @@ import java.awt.geom.AffineTransform;
 public class GrassTile extends Tile {
 
     public GrassTile( int id ) {
-        super( id, 100 );
+        super( id );
     }
 
     @Override

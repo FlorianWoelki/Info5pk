@@ -16,11 +16,9 @@ public class Tile {
     public final byte id;
 
     public float mouseWheelScale = 0.5f;
-    public float food;
 
-    public Tile( int id, float food ) {
+    public Tile( int id ) {
         this.id = (byte) id;
-        this.food = food;
         if ( Tile.tiles[id] != null ) throw new RuntimeException( "Duplicate tile ids!" );
         Tile.tiles[id] = this;
     }

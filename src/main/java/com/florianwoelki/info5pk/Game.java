@@ -32,7 +32,7 @@ public class Game extends Canvas implements Runnable {
         this.addMouseMotionListener( this.mouse );
         this.addMouseWheelListener( this.mouse );
 
-        this.level = new Level( 128, 128, 1, null );
+        this.level = new Level( 128, 128 );
 
         this.window = new Window( this );
         this.window.setVisible( true );

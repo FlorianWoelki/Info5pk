@@ -142,8 +142,8 @@ public class CreatureFactory {
 
     private float calculateAverageAgeOfLastDeadCreatures() {
         float ageAverage = 0;
-        for ( int i = 0; i < averageAgeOfLastCreatures.length; i++ ) {
-            ageAverage += averageAgeOfLastCreatures[i];
+        for ( float averageAgeOfLastCreature : averageAgeOfLastCreatures ) {
+            ageAverage += averageAgeOfLastCreature;
         }
         return ageAverage / averageAgeOfLastCreatures.length;
     }

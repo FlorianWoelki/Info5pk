@@ -5,7 +5,6 @@ import com.florianwoelki.info5pk.level.generator.LevelGenerator;
 import com.florianwoelki.info5pk.level.tile.Tile;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 /**
  * Created by Florian Woelki on 19.11.16.
@@ -19,29 +18,29 @@ public class Level {
     public int height;
 
     public byte[] tiles;
-    public byte[] data;
     public float[][] foodValues;
-
-    public int grassColor = 141;
-    public int dirtColor = 322;
-    public int sandColor = 550;
-
-    public java.util.List<Float> foodRecord = new ArrayList<>();
 
     public CreatureFactory creatureFactory;
 
-    public Level( int width, int height, int level, Level parentLevel ) {
+    public Level( int width, int height ) {
         this.width = width;
         this.height = height;
         this.creatureFactory = new CreatureFactory( this );
-        byte[][] maps;
 
-        this.dirtColor = 222;
+        LevelGenerator levelGenerator = new LevelGenerator( width, height );
+        levelGenerator.startFrequencyX = 10;
+        levelGenerator.startFrequencyY = 10;
+        levelGenerator.calculate();
+        float[][] map = levelGenerator.map;
+        this.tiles = new byte[width * height];
+        for ( int y = 0; y < height; y++ ) {
+            for ( int x = 0; x < width; x++ ) {
+                int i = x + y * width;
 
-        maps = LevelGenerator.createAndValidateTopMap( width, height );
+                this.tiles[i] = (byte) ( map[x][y] > 0.5 ? 0 : 1 );
+            }
+        }
 
-        this.tiles = maps[0];
-        this.data = maps[1];
         this.foodValues = new float[this.tiles.length][this.tiles.length];
 
         for ( int y = 0; y < height; y++ ) {
@@ -93,8 +92,6 @@ public class Level {
         }
 
         this.creatureFactory.update();
-
-        this.foodRecord.add( this.calculateFoodAvailable() );
     }
 
     private void grow( int x, int y ) {
@@ -138,36 +135,9 @@ public class Level {
         return false;
     }
 
-    public float calculateFoodAvailable() {
-        float food = 0;
-        for ( int y = 0; y < this.height; y++ ) {
-            for ( int x = 0; x < this.width; x++ ) {
-                food += this.foodValues[x][y];
-            }
-        }
-        return food;
-    }
-
-    public void setTile( int x, int y, Tile tile ) {
-        Tile.tiles[this.tiles[x + y * this.width]] = tile;
-        if ( !tile.isGrass() ) {
-            this.foodValues[x][y] = 0;
-        }
-    }
-
     public Tile getTile( int x, int y ) {
         if ( x < 0 || y < 0 || x >= this.width || y >= this.height ) return Tile.water;
         return Tile.tiles[this.tiles[x + y * this.width]];
-    }
-
-    public boolean setFoodValue( int x, int y, float foodValue ) {
-        if ( x >= 0 && x < this.width && y >= 0 && y < this.height ) {
-            if ( Tile.tiles[this.tiles[x + y * this.width]].isGrass() ) {
-                this.foodValues[x][y] = foodValue;
-                return true;
-            }
-        }
-        return false;
     }
 
 }
