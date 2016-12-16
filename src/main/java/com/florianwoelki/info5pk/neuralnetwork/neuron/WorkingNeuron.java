@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class WorkingNeuron extends Neuron {
 
-    private Float value = null  ;
+    private float value = 0.0f;
     private List<Connection> connections = new ArrayList<>();
 
     public void randomMutation( float mutationRate ) {
@@ -27,7 +27,7 @@ public class WorkingNeuron extends Neuron {
     }
 
     public void invalidate() {
-        this.value = null;
+        this.value = 0.0f;
     }
 
     public void randomizeWeights() {
@@ -48,8 +48,8 @@ public class WorkingNeuron extends Neuron {
 
     @Override
     public float getValue() {
-        if ( this.value == null ) {
-            calculate();
+        if ( this.value == 0.0f ) {
+            this.calculate();
         }
         return this.value;
     }
@@ -57,7 +57,7 @@ public class WorkingNeuron extends Neuron {
     @Override
     public Neuron nameCopy() {
         WorkingNeuron clone = new WorkingNeuron();
-        clone.setName( getName() );
+        clone.setName( this.getName() );
         return clone;
     }
 
@@ -75,4 +75,5 @@ public class WorkingNeuron extends Neuron {
     public List<Connection> getConnections() {
         return this.connections;
     }
+
 }

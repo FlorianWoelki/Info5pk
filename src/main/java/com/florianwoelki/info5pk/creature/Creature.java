@@ -58,32 +58,42 @@ public abstract class Creature {
     protected final String NAME_IN_BIAS = "bias";
     protected final String NAME_IN_FOOD_VALUE_POSITION = "Food Value Position";
     protected final String NAME_IN_FOOD_VALUE_FEELER = "Food Value Feeler";
+    protected final String NAME_IN_OCCLUSION_FEELER = "Occlusion Feeler";
     protected final String NAME_IN_ENERGY = "Energy";
     protected final String NAME_IN_AGE = "Age";
+    protected final String NAME_IN_GENETIC_DIFFERENCE = "Genetic Difference";
+    protected final String NAME_IN_WAS_ATTACKED = "Was Attacked";
     protected final String NAME_IN_WATER_ON_FEELER = "Water On Feeler";
     protected final String NAME_IN_WATER_ON_CREATURE = "Water On Creature";
+    protected final String NAME_IN_MEMORY1 = "Input Memory #1";
 
     protected final String NAME_OUT_BIRTH = "Birth";
     protected final String NAME_OUT_ROTATE = "Rotate";
     protected final String NAME_OUT_FORWARD = "Forward";
     protected final String NAME_OUT_FEELER_ANGLE = "Feeler Angle";
+    protected final String NAME_OUT_ATTACK = "Attack";
     protected final String NAME_OUT_EAT = "Eat";
+    protected final String NAME_OUT_MEMORY1 = "Output Memory #1";
 
     protected InputNeuron inBias = new InputNeuron();
     protected InputNeuron inFoodValuePosition = new InputNeuron();
     protected InputNeuron inFoodValueFeeler = new InputNeuron();
+    protected InputNeuron inOcclusionFeeler = new InputNeuron();
     protected InputNeuron inEnergy = new InputNeuron();
     protected InputNeuron inAge = new InputNeuron();
+    protected InputNeuron inGeneticDifference = new InputNeuron();
+    protected InputNeuron inWasAttacked = new InputNeuron();
     protected InputNeuron inWaterOnFeeler = new InputNeuron();
     protected InputNeuron inWaterOnCreature = new InputNeuron();
+    protected InputNeuron inMemory1 = new InputNeuron();
 
     protected WorkingNeuron outBirth = new WorkingNeuron();
     protected WorkingNeuron outRotate = new WorkingNeuron();
     protected WorkingNeuron outForward = new WorkingNeuron();
     protected WorkingNeuron outFeelerAngle = new WorkingNeuron();
+    protected WorkingNeuron outAttack = new WorkingNeuron();
     protected WorkingNeuron outEat = new WorkingNeuron();
-
-    protected int amountOfMemory = 1;
+    protected WorkingNeuron outMemory1 = new WorkingNeuron();
 
     protected Level level;
     public float mouseWheelScale = 1;
@@ -101,26 +111,36 @@ public abstract class Creature {
         this.inBias.setName( this.NAME_IN_BIAS );
         this.inFoodValuePosition.setName( this.NAME_IN_FOOD_VALUE_POSITION );
         this.inFoodValueFeeler.setName( this.NAME_IN_FOOD_VALUE_FEELER );
+        this.inOcclusionFeeler.setName( this.NAME_IN_OCCLUSION_FEELER );
         this.inEnergy.setName( this.NAME_IN_ENERGY );
         this.inAge.setName( this.NAME_IN_AGE );
+        this.inGeneticDifference.setName( this.NAME_IN_GENETIC_DIFFERENCE );
+        this.inWasAttacked.setName( this.NAME_IN_WAS_ATTACKED );
         this.inWaterOnFeeler.setName( this.NAME_IN_WATER_ON_FEELER );
         this.inWaterOnCreature.setName( this.NAME_IN_WATER_ON_CREATURE );
+        this.inMemory1.setName( this.NAME_IN_MEMORY1 );
 
         this.outBirth.setName( this.NAME_OUT_BIRTH );
         this.outRotate.setName( this.NAME_OUT_ROTATE );
         this.outForward.setName( this.NAME_OUT_FORWARD );
         this.outFeelerAngle.setName( this.NAME_OUT_FEELER_ANGLE );
+        this.outAttack.setName( this.NAME_OUT_ATTACK );
         this.outEat.setName( this.NAME_OUT_EAT );
+        this.outMemory1.setName( this.NAME_OUT_MEMORY1 );
 
         this.brain = new NeuralNetwork();
 
         this.brain.addInputNeuron( this.inBias );
         this.brain.addInputNeuron( this.inFoodValuePosition );
         this.brain.addInputNeuron( this.inFoodValueFeeler );
+        this.brain.addInputNeuron( this.inOcclusionFeeler );
         this.brain.addInputNeuron( this.inEnergy );
         this.brain.addInputNeuron( this.inAge );
+        this.brain.addInputNeuron( this.inGeneticDifference );
+        this.brain.addInputNeuron( this.inWasAttacked );
         this.brain.addInputNeuron( this.inWaterOnFeeler );
         this.brain.addInputNeuron( this.inWaterOnCreature );
+        this.brain.addInputNeuron( this.inMemory1 );
 
         this.brain.generateHiddenNeurons( 10 );
 
@@ -128,7 +148,9 @@ public abstract class Creature {
         this.brain.addOutputNeuron( this.outRotate );
         this.brain.addOutputNeuron( this.outForward );
         this.brain.addOutputNeuron( this.outFeelerAngle );
+        this.brain.addOutputNeuron( this.outAttack );
         this.brain.addOutputNeuron( this.outEat );
+        this.brain.addOutputNeuron( this.outMemory1 );
 
         this.brain.generateFullMesh();
 
@@ -156,21 +178,25 @@ public abstract class Creature {
             e.printStackTrace();
         }
 
-        this.amountOfMemory = mother.amountOfMemory;
-
         this.inBias = this.brain.getInputNeuronFromName( this.NAME_IN_BIAS );
         this.inFoodValuePosition = this.brain.getInputNeuronFromName( this.NAME_IN_FOOD_VALUE_POSITION );
         this.inFoodValueFeeler = this.brain.getInputNeuronFromName( this.NAME_IN_FOOD_VALUE_FEELER );
+        this.inOcclusionFeeler = this.brain.getInputNeuronFromName( this.NAME_IN_OCCLUSION_FEELER );
         this.inEnergy = this.brain.getInputNeuronFromName( this.NAME_IN_ENERGY );
         this.inAge = this.brain.getInputNeuronFromName( this.NAME_IN_AGE );
+        this.inGeneticDifference = this.brain.getInputNeuronFromName( this.NAME_IN_GENETIC_DIFFERENCE );
+        this.inWasAttacked = this.brain.getInputNeuronFromName( this.NAME_IN_WAS_ATTACKED );
         this.inWaterOnFeeler = this.brain.getInputNeuronFromName( this.NAME_IN_WATER_ON_FEELER );
         this.inWaterOnCreature = this.brain.getInputNeuronFromName( this.NAME_IN_WATER_ON_CREATURE );
+        this.inMemory1 = this.brain.getInputNeuronFromName( this.NAME_IN_MEMORY1 );
 
         this.outBirth = this.brain.getOutputNeuronFromName( this.NAME_OUT_BIRTH );
         this.outRotate = this.brain.getOutputNeuronFromName( this.NAME_OUT_ROTATE );
         this.outForward = this.brain.getOutputNeuronFromName( this.NAME_OUT_FORWARD );
         this.outFeelerAngle = this.brain.getOutputNeuronFromName( this.NAME_OUT_FEELER_ANGLE );
+        this.outAttack = this.brain.getOutputNeuronFromName( this.NAME_OUT_ATTACK );
         this.outEat = this.brain.getOutputNeuronFromName( this.NAME_OUT_EAT );
+        this.outMemory1 = this.brain.getOutputNeuronFromName( this.NAME_OUT_MEMORY1 );
 
         this.calculateFeelerPosition();
         this.mutateConnections();
@@ -191,12 +217,14 @@ public abstract class Creature {
     }
 
     private void mutateConnections() {
-        for ( int i = 0; i < 10; i++ ) {
+        for ( int i = 0; i < 7; i++ ) {
             this.brain.randomMutation( 0.1f );
         }
     }
 
     public void readSensors() {
+        this.inMemory1.setValue( this.outMemory1.getValue() );
+
         this.brain.invalidate();
 
         Tile creatureTile = this.level.getTile( (int) this.x / 16, (int) this.y / 16 );
@@ -213,8 +241,11 @@ public abstract class Creature {
         } else {
             this.inFoodValueFeeler.setValue( 0f );
         }
+        this.inOcclusionFeeler.setValue( 0f );
         this.inEnergy.setValue( ( this.energy - this.MINIMUM_SURVIVAL_ENERGY ) / ( this.START_ENERGY - this.MINIMUM_SURVIVAL_ENERGY ) );
         this.inAge.setValue( this.age / 10f );
+        this.inGeneticDifference.setValue( 0f );
+        this.inWasAttacked.setValue( 0f );
         this.inWaterOnFeeler.setValue( feelerTile.isGrass() ? 0f : 1f );
         this.inWaterOnCreature.setValue( creatureTile.isGrass() ? 0f : 1f );
     }
@@ -234,12 +265,17 @@ public abstract class Creature {
             oldestCreatureEver = this;
         }
 
-        if ( this.energy < 100 ) {
+        if ( this.energy < 100 || Float.isNaN( this.energy ) ) {
             this.kill( tile );
         }
     }
 
     private void kill( Tile tile ) {
+        if ( tile.isGrass() ) {
+            if ( this.x / 16 > 0 && this.x / 16 <= this.level.width && this.y / 16 > 0 && this.y / 16 <= this.level.height ) {
+                this.level.foodValues[(int) ( this.x / 16 )][(int) ( this.y / 16 )] += this.energy * this.FOOD_DROP_PERCENTAGE;
+            }
+        }
         this.level.creatureFactory.removeCreature( this );
     }
 

@@ -41,8 +41,7 @@ public class MathUtil {
     }
 
     public static float sigmoid( float x ) {
-        float et = (float) Math.pow( Math.E, x );
-        return et / ( 1 + et );
+        return (float) ( 1 / ( 1 + Math.exp( -x ) ) );
     }
 
     public static int clampColorValue( int val ) {

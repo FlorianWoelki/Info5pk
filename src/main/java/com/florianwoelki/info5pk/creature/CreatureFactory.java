@@ -76,7 +76,7 @@ public class CreatureFactory {
 
         if ( this.selectedCreature != null ) {
             g.setColor( new Color( 0, 0, 0, 0.5f ) );
-            g.fillRect( 800, 0, 500, 450 + this.selectedCreature.amountOfMemory * this.selectedCreature.SIZE );
+            g.fillRect( 800, 0, 500, 450 );
             g.setColor( Color.RED );
             g.drawString( "Selected Creature: ", 820, 20 );
             g.drawString( "Age: " + this.selectedCreature.age, 820, 40 );
@@ -84,7 +84,12 @@ public class CreatureFactory {
             g.drawString( "Children Count: " + this.selectedCreature.children.size(), 820, 80 );
             g.drawString( "Generation: " + this.selectedCreature.generation, 820, 100 );
             g.drawString( "Alive: " + ( this.selectedCreature.energy > 100 ? "Alive" : "Dead" ), 820, 120 );
-            this.selectedCreature.brain.render( g, new Rectangle( 950, 160, 200, 250 + this.selectedCreature.amountOfMemory * this.selectedCreature.SIZE ) );
+            g.drawString( "Birth Output: " + this.selectedCreature.outBirth.getValue(), 1020, 40 );
+            g.drawString( "Eat Output: " + this.selectedCreature.outEat.getValue(), 1020, 60 );
+            g.drawString( "FeelerAngle Output: " + this.selectedCreature.outFeelerAngle.getValue(), 1020, 80 );
+            g.drawString( "Forward Output: " + this.selectedCreature.outForward.getValue(), 1020, 100 );
+            g.drawString( "Rotate Output: " + this.selectedCreature.outRotate.getValue(), 1020, 120 );
+            this.selectedCreature.brain.render( g, new Rectangle( 950, 160, 200, 250 ) );
         }
     }
 

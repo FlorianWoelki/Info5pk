@@ -20,6 +20,7 @@ public class Game extends Canvas implements Runnable {
     private boolean isRunning;
 
     private Level level;
+    private Runnable levelRunnable;
 
     public Game() {
         this.keyboard = new Keyboard();
