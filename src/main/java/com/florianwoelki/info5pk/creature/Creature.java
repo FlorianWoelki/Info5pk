@@ -205,14 +205,6 @@ public abstract class Creature {
         float g = mother.color.getGreen() / 255f;
         float b = mother.color.getBlue() / 255f;
 
-        r += (float) MathUtil.random.nextDouble() * 0.1f - 0.05f;
-        g += (float) MathUtil.random.nextDouble() * 0.1f - 0.05f;
-        b += (float) MathUtil.random.nextDouble() * 0.1f - 0.05f;
-
-        r = MathUtil.clamp( r );
-        g = MathUtil.clamp( g );
-        b = MathUtil.clamp( b );
-
         this.color = new Color( r, g, b );
     }
 
