@@ -22,119 +22,119 @@ public class Level {
 
     public CreatureFactory creatureFactory;
 
-    public Level( int width, int height ) {
+    public Level(int width, int height) {
         this.width = width;
         this.height = height;
-        this.creatureFactory = new CreatureFactory( this );
+        creatureFactory = new CreatureFactory(this);
 
-        LevelGenerator levelGenerator = new LevelGenerator( width, height );
+        LevelGenerator levelGenerator = new LevelGenerator(width, height);
         levelGenerator.startFrequencyX = 10;
         levelGenerator.startFrequencyY = 10;
         levelGenerator.calculate();
         float[][] map = levelGenerator.map;
-        this.tiles = new byte[width * height];
-        for ( int y = 0; y < height; y++ ) {
-            for ( int x = 0; x < width; x++ ) {
+        tiles = new byte[width * height];
+        for(int y = 0; y < height; y++) {
+            for(int x = 0; x < width; x++) {
                 int i = x + y * width;
 
-                this.tiles[i] = (byte) ( map[x][y] > 0.5 ? 0 : 1 );
+                tiles[i] = (byte) (map[x][y] > 0.5 ? 0 : 1);
             }
         }
 
-        this.foodValues = new float[this.tiles.length][this.tiles.length];
+        foodValues = new float[tiles.length][tiles.length];
 
-        for ( int y = 0; y < height; y++ ) {
-            for ( int x = 0; x < width; x++ ) {
-                this.foodValues[x][y] = 0f;
+        for(int y = 0; y < height; y++) {
+            for(int x = 0; x < width; x++) {
+                foodValues[x][y] = 0f;
             }
         }
     }
 
-    public void render( Graphics g, int xOffset, int yOffset, float mouseWheelScale ) {
-        for ( int y = 0; y < this.height; y++ ) {
-            for ( int x = 0; x < this.width; x++ ) {
-                Tile tile = this.getTile( x, y );
+    public void render(Graphics g, int xOffset, int yOffset, float mouseWheelScale) {
+        for(int y = 0; y < height; y++) {
+            for(int x = 0; x < width; x++) {
+                Tile tile = getTile(x, y);
                 tile.mouseWheelScale = mouseWheelScale;
 
-                if ( tile.isGrass() ) {
-                    float alpha = this.foodValues[x][y] / 100.0f;
-                    if ( alpha < 0f ) {
+                if(tile.isGrass()) {
+                    float alpha = foodValues[x][y] / 100.0f;
+                    if(alpha < 0f) {
                         alpha = 0;
-                    } else if ( alpha > 1f ) {
+                    } else if(alpha > 1f) {
                         alpha = 1f;
                     }
 
-                    Color color = new Color( 0f, 1f, 0f, alpha );
+                    Color color = new Color(0f, 1f, 0f, alpha);
 
-                    g.setColor( color );
+                    g.setColor(color);
                 }
 
-                tile.render( g, this, x + xOffset, y + yOffset );
+                tile.render(g, this, x + xOffset, y + yOffset);
             }
         }
 
-        this.creatureFactory.render( g, xOffset, yOffset, mouseWheelScale );
+        creatureFactory.render(g, xOffset, yOffset, mouseWheelScale);
     }
 
     public void update() {
-        for ( int y = 0; y < this.height; y++ ) {
-            for ( int x = 0; x < this.width; x++ ) {
-                this.getTile( x, y ).update();
+        for(int y = 0; y < height; y++) {
+            for(int x = 0; x < width; x++) {
+                getTile(x, y).update();
             }
         }
 
-        for ( int y = 0; y < this.height; y++ ) {
-            for ( int x = 0; x < this.width; x++ ) {
-                if ( this.isFertile( x, y ) ) {
-                    this.grow( x, y );
+        for(int y = 0; y < height; y++) {
+            for(int x = 0; x < width; x++) {
+                if(isFertile(x, y)) {
+                    grow(x, y);
                 }
             }
         }
 
-        this.creatureFactory.update();
+        creatureFactory.update();
     }
 
-    private void grow( int x, int y ) {
-        this.foodValues[x][y] += 0.2f;
-        if ( this.foodValues[x][y] > this.MAXIMUM_FOOD_PER_TILE ) {
-            this.foodValues[x][y] = this.MAXIMUM_FOOD_PER_TILE;
+    private void grow(int x, int y) {
+        foodValues[x][y] += 0.2f;
+        if(foodValues[x][y] > MAXIMUM_FOOD_PER_TILE) {
+            foodValues[x][y] = MAXIMUM_FOOD_PER_TILE;
         }
     }
 
-    private boolean isFertileToNeighbors( int x, int y ) {
-        if ( x < 0 || y < 0 || x >= this.width || y >= this.height ) {
+    private boolean isFertileToNeighbors(int x, int y) {
+        if(x < 0 || y < 0 || x >= width || y >= height) {
             return false;
         }
-        if ( this.getTile( x, y ).isWater() ) {
+        if(getTile(x, y).isWater()) {
             return true;
         }
-        return this.getTile( x, y ).isGrass() && this.foodValues[x][y] > 50;
+        return getTile(x, y).isGrass() && foodValues[x][y] > 50;
     }
 
-    private boolean isFertile( int x, int y ) {
-        if ( this.getTile( x, y ).isGrass() ) {
-            if ( this.foodValues[x][y] > 50 ) {
+    private boolean isFertile(int x, int y) {
+        if(getTile(x, y).isGrass()) {
+            if(foodValues[x][y] > 50) {
                 return true;
             }
-            if ( this.isFertileToNeighbors( x - 1, y ) ) {
+            if(isFertileToNeighbors(x - 1, y)) {
                 return true;
             }
-            if ( this.isFertileToNeighbors( x + 1, y ) ) {
+            if(isFertileToNeighbors(x + 1, y)) {
                 return true;
             }
-            if ( this.isFertileToNeighbors( x, y - 1 ) ) {
+            if(isFertileToNeighbors(x, y - 1)) {
                 return true;
             }
-            if ( this.isFertileToNeighbors( x, y + 1 ) ) {
+            if(isFertileToNeighbors(x, y + 1)) {
                 return true;
             }
         }
         return false;
     }
 
-    public Tile getTile( int x, int y ) {
-        if ( x < 0 || y < 0 || x >= this.width || y >= this.height ) return Tile.water;
-        return Tile.tiles[this.tiles[x + y * this.width]];
+    public Tile getTile(int x, int y) {
+        if(x < 0 || y < 0 || x >= width || y >= height) return Tile.water;
+        return Tile.tiles[tiles[x + y * width]];
     }
 
 }

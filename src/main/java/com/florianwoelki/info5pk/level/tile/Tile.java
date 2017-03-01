@@ -10,31 +10,31 @@ import java.awt.*;
 public class Tile {
 
     public static Tile[] tiles = new Tile[256];
-    public static Tile grass = new GrassTile( 0 );
-    public static Tile water = new WaterTile( 1 );
+    public static Tile grass = new GrassTile(0);
+    public static Tile water = new WaterTile(1);
 
     public final byte id;
 
     public float mouseWheelScale = 0.5f;
 
-    public Tile( int id ) {
+    public Tile(int id) {
         this.id = (byte) id;
-        if ( Tile.tiles[id] != null ) throw new RuntimeException( "Duplicate tile ids!" );
+        if(Tile.tiles[id] != null) throw new RuntimeException("Duplicate tile ids!");
         Tile.tiles[id] = this;
     }
 
-    public void render( Graphics g, Level level, int x, int y ) {
+    public void render(Graphics g, Level level, int x, int y) {
     }
 
     public void update() {
     }
 
     public boolean isGrass() {
-        return this.id == Tile.grass.id;
+        return id == Tile.grass.id;
     }
 
     public boolean isWater() {
-        return this.id == Tile.water.id;
+        return id == Tile.water.id;
     }
 
 }

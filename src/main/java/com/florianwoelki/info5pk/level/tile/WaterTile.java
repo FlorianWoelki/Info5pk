@@ -10,21 +10,21 @@ import java.awt.geom.AffineTransform;
  */
 public class WaterTile extends Tile {
 
-    public WaterTile( int id ) {
-        super( id );
+    public WaterTile(int id) {
+        super(id);
     }
 
     @Override
-    public void render( Graphics g, Level level, int x, int y ) {
+    public void render(Graphics g, Level level, int x, int y) {
         // int color = level.waterColor;
 
         Graphics2D g2d = (Graphics2D) g.create();
         AffineTransform at = new AffineTransform();
-        at.scale( this.mouseWheelScale, this.mouseWheelScale );
-        g2d.setTransform( at );
+        at.scale(mouseWheelScale, mouseWheelScale);
+        g2d.setTransform(at);
 
-        g2d.setColor( Color.BLUE );
-        g2d.fillRect( x * 16, y * 16, 16, 16 );
+        g2d.setColor(Color.BLUE);
+        g2d.fillRect(x * 16, y * 16, 16, 16);
 
         g2d.dispose();
     }
