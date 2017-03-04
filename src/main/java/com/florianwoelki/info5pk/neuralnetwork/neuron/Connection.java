@@ -14,7 +14,7 @@ public class Connection {
     }
 
     public float getValue() {
-        return this.weight * this.entryNeuron.getValue();
+        return weight * entryNeuron.getValue();
     }
 
 }

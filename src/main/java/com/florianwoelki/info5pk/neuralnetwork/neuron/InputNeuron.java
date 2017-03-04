@@ -13,11 +13,11 @@ public class InputNeuron extends Neuron {
 
     @Override
     public float getValue() {
-        if ( this.value == 0.0f ) {
+        if ( value == 0.0f ) {
             return 0.0f;
         }
 
-        return this.value;
+        return value;
     }
 
     @Override
