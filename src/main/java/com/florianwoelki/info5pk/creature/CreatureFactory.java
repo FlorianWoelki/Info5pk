@@ -32,122 +32,122 @@ public class CreatureFactory {
 
     private Level level;
 
-    public CreatureFactory( Level level ) {
+    public CreatureFactory(Level level) {
         this.level = level;
         this.creatures = new ArrayList<>();
         this.toRemoveCreatures = new ArrayList<>();
         this.toSpawnCreatures = new ArrayList<>();
     }
 
-    public void addCreature( Creature creature ) {
-        this.toSpawnCreatures.add( creature );
+    public void addCreature(Creature creature) {
+        toSpawnCreatures.add(creature);
     }
 
-    public void removeCreature( Creature creature ) {
-        this.toRemoveCreatures.add( creature );
+    public void removeCreature(Creature creature) {
+        toRemoveCreatures.add(creature);
     }
 
-    public void render( Graphics g, int xOffset, int yOffset, float mouseWheelScale ) {
-        for ( Creature creature : this.creatures ) {
+    public void render(Graphics g, int xOffset, int yOffset, float mouseWheelScale) {
+        for(Creature creature : creatures) {
             creature.mouseWheelScale = mouseWheelScale;
-            creature.render( g, xOffset, yOffset );
+            creature.render(g, xOffset, yOffset);
 
         }
 
-        this.renderGeneralStats( g );
+        this.renderGeneralStats(g);
     }
 
-    private void renderGeneralStats( Graphics g ) {
-        g.setColor( new Color( 0, 0, 0, 0.5f ) );
-        g.fillRect( 0, 0, 300, 600 );
-        g.setColor( Color.RED );
-        g.drawString( "Creatures: " + this.creatures.size(), 20, 20 );
-        g.drawString( "Deaths: " + this.numberOfDeaths, 20, 40 );
-        g.drawString( "Maximum Generation: " + Creature.maximumGeneration, 20, 60 );
-        g.drawString( "Year: " + this.year, 20, 80 );
-        g.drawString( "Oldest Creature Ever: " + Creature.oldestCreatureEver.age, 20, 100 );
-        g.drawString( "Oldest Creature Alive: " + this.oldestCreatureAlive.age, 20, 120 );
-        if ( this.averageAgeOfLastCreaturesAccurate ) {
+    private void renderGeneralStats(Graphics g) {
+        g.setColor(new Color(0, 0, 0, 0.5f));
+        g.fillRect(0, 0, 300, 600);
+        g.setColor(Color.RED);
+        g.drawString("Creatures: " + creatures.size(), 20, 20);
+        g.drawString("Deaths: " + numberOfDeaths, 20, 40);
+        g.drawString("Maximum Generation: " + Creature.maximumGeneration, 20, 60);
+        g.drawString("Year: " + year, 20, 80);
+        g.drawString("Oldest Creature Ever: " + Creature.oldestCreatureEver.age, 20, 100);
+        g.drawString("Oldest Creature Alive: " + oldestCreatureAlive.age, 20, 120);
+        if(averageAgeOfLastCreaturesAccurate) {
             float averageDeathAge = calculateAverageAgeOfLastDeadCreatures();
-            this.averageDeathAgeRecord.add( averageDeathAge );
-            g.setColor( Color.RED );
-            g.drawString( "Average Death Age: " + averageDeathAge, 20, 140 );
+            averageDeathAgeRecord.add(averageDeathAge);
+            g.setColor(Color.RED);
+            g.drawString("Average Death Age: " + averageDeathAge, 20, 140);
         }
 
-        if ( this.selectedCreature != null ) {
-            g.setColor( new Color( 0, 0, 0, 0.5f ) );
-            g.fillRect( 800, 0, 500, 450 );
-            g.setColor( Color.RED );
-            g.drawString( "Selected Creature: ", 820, 20 );
-            g.drawString( "Age: " + this.selectedCreature.age, 820, 40 );
-            g.drawString( "Energy: " + this.selectedCreature.energy, 820, 60 );
-            g.drawString( "Children Count: " + this.selectedCreature.children.size(), 820, 80 );
-            g.drawString( "Generation: " + this.selectedCreature.generation, 820, 100 );
-            g.drawString( "Alive: " + ( this.selectedCreature.energy > 100 ? "Alive" : "Dead" ), 820, 120 );
-            g.drawString( "Birth Output: " + this.selectedCreature.outBirth.getValue(), 1020, 40 );
-            g.drawString( "Eat Output: " + this.selectedCreature.outEat.getValue(), 1020, 60 );
-            g.drawString( "FeelerAngle Output: " + this.selectedCreature.outFeelerAngle.getValue(), 1020, 80 );
-            g.drawString( "Forward Output: " + this.selectedCreature.outForward.getValue(), 1020, 100 );
-            g.drawString( "Rotate Output: " + this.selectedCreature.outRotate.getValue(), 1020, 120 );
-            this.selectedCreature.brain.render( g, new Rectangle( 950, 160, 200, 250 ) );
+        if(this.selectedCreature != null) {
+            g.setColor(new Color(0, 0, 0, 0.5f));
+            g.fillRect(800, 0, 500, 450);
+            g.setColor(Color.RED);
+            g.drawString("Selected Creature: ", 820, 20);
+            g.drawString("Age: " + selectedCreature.age, 820, 40);
+            g.drawString("Energy: " + selectedCreature.energy, 820, 60);
+            g.drawString("Children Count: " + selectedCreature.children.size(), 820, 80);
+            g.drawString("Generation: " + selectedCreature.generation, 820, 100);
+            g.drawString("Alive: " + (selectedCreature.energy > 100 ? "Alive" : "Dead"), 820, 120);
+            g.drawString("Birth Output: " + selectedCreature.outBirth.getValue(), 1020, 40);
+            g.drawString("Eat Output: " + selectedCreature.outEat.getValue(), 1020, 60);
+            g.drawString("FeelerAngle Output: " + selectedCreature.outFeelerAngle.getValue(), 1020, 80);
+            g.drawString("Forward Output: " + selectedCreature.outForward.getValue(), 1020, 100);
+            g.drawString("Rotate Output: " + selectedCreature.outRotate.getValue(), 1020, 120);
+            selectedCreature.brain.render(g, new Rectangle(950, 160, 200, 250));
         }
     }
 
     public void update() {
-        if ( this.creatures.size() < 50 ) {
+        if(creatures.size() < 50) {
             int x;
             int y;
 
             do {
-                x = MathUtil.random.nextInt( this.level.width );
-                y = MathUtil.random.nextInt( this.level.height );
-            } while ( this.level.getTile( x, y ) == Tile.water );
+                x = MathUtil.random.nextInt(level.width);
+                y = MathUtil.random.nextInt(level.height);
+            } while(level.getTile(x, y) == Tile.water);
 
-            TestCreature creature = new TestCreature( this.level, x * 16, y * 16, (float) ( MathUtil.random.nextDouble() * MathUtil.PI * 2 ) );
-            this.addCreature( creature );
+            TestCreature creature = new TestCreature(level, x * 16, y * 16, (float) (MathUtil.random.nextDouble() * MathUtil.PI * 2));
+            addCreature(creature);
         }
 
-        for ( Creature creature : this.creatures ) {
+        for(Creature creature : this.creatures) {
             creature.update();
         }
 
-        this.numberOfDeaths += this.toRemoveCreatures.size();
-        for ( Creature creature : this.toRemoveCreatures ) {
-            this.addDeathAge( creature.age );
-            this.creatures.remove( creature );
+        numberOfDeaths += toRemoveCreatures.size();
+        for(Creature creature : toRemoveCreatures) {
+            addDeathAge(creature.age);
+            creatures.remove(creature);
         }
-        this.toRemoveCreatures.clear();
+        toRemoveCreatures.clear();
 
-        for ( Creature creature : this.toSpawnCreatures ) {
-            this.creatures.add( creature );
+        for(Creature creature : toSpawnCreatures) {
+            creatures.add(creature);
         }
-        this.toSpawnCreatures.clear();
+        toSpawnCreatures.clear();
 
-        this.year += this.level.TIME_PER_TICK;
+        year += level.TIME_PER_TICK;
 
-        if ( this.creatures.size() > 0 ) {
-            this.oldestCreatureAlive = this.creatures.get( 0 );
-            for ( Creature creature : this.creatures ) {
-                if ( creature.age > this.oldestCreatureAlive.age ) {
-                    this.oldestCreatureAlive = creature;
+        if(creatures.size() > 0) {
+            oldestCreatureAlive = creatures.get(0);
+            for(Creature creature : creatures) {
+                if(creature.age > oldestCreatureAlive.age) {
+                    oldestCreatureAlive = creature;
                 }
             }
         }
 
-        this.selectedCreature = this.oldestCreatureAlive;
+        selectedCreature = oldestCreatureAlive;
     }
 
-    private void addDeathAge( float age ) {
-        CreatureFactory.averageAgeOfLastCreatures[this.indexForAverageAgeOfLastCreatures++] = age;
-        if ( this.indexForAverageAgeOfLastCreatures >= CreatureFactory.averageAgeOfLastCreatures.length ) {
-            this.indexForAverageAgeOfLastCreatures = 0;
-            this.averageAgeOfLastCreaturesAccurate = true;
+    private void addDeathAge(float age) {
+        averageAgeOfLastCreatures[indexForAverageAgeOfLastCreatures++] = age;
+        if(indexForAverageAgeOfLastCreatures >= averageAgeOfLastCreatures.length) {
+            indexForAverageAgeOfLastCreatures = 0;
+            averageAgeOfLastCreaturesAccurate = true;
         }
     }
 
     private float calculateAverageAgeOfLastDeadCreatures() {
         float ageAverage = 0;
-        for ( float averageAgeOfLastCreature : averageAgeOfLastCreatures ) {
+        for(float averageAgeOfLastCreature : averageAgeOfLastCreatures) {
             ageAverage += averageAgeOfLastCreature;
         }
         return ageAverage / averageAgeOfLastCreatures.length;

@@ -17,7 +17,7 @@ public abstract class Creature {
 
     public static int maximumGeneration = 1;
     public static int currentId;
-    public static Creature oldestCreatureEver = new TestCreature( null, 0, 0, 0 );
+    public static Creature oldestCreatureEver = new TestCreature(null, 0, 0, 0);
 
     public java.util.List<Creature> children = new ArrayList<>();
     private long motherId;
@@ -50,7 +50,7 @@ public abstract class Creature {
     protected float feelerY;
     protected float feelerAngle;
 
-    protected float energy = this.START_ENERGY;
+    protected float energy = START_ENERGY;
     protected float age = 0;
 
     protected NeuralNetwork brain;
@@ -100,7 +100,7 @@ public abstract class Creature {
 
     protected Color color;
 
-    public Creature( Level level, float x, float y, float viewAngle ) {
+    public Creature(Level level, float x, float y, float viewAngle) {
         this.id = currentId++;
 
         this.level = level;
@@ -108,217 +108,217 @@ public abstract class Creature {
         this.y = y;
         this.viewAngle = viewAngle;
 
-        this.inBias.setName( this.NAME_IN_BIAS );
-        this.inFoodValuePosition.setName( this.NAME_IN_FOOD_VALUE_POSITION );
-        this.inFoodValueFeeler.setName( this.NAME_IN_FOOD_VALUE_FEELER );
-        this.inOcclusionFeeler.setName( this.NAME_IN_OCCLUSION_FEELER );
-        this.inEnergy.setName( this.NAME_IN_ENERGY );
-        this.inAge.setName( this.NAME_IN_AGE );
-        this.inGeneticDifference.setName( this.NAME_IN_GENETIC_DIFFERENCE );
-        this.inWasAttacked.setName( this.NAME_IN_WAS_ATTACKED );
-        this.inWaterOnFeeler.setName( this.NAME_IN_WATER_ON_FEELER );
-        this.inWaterOnCreature.setName( this.NAME_IN_WATER_ON_CREATURE );
-        this.inMemory1.setName( this.NAME_IN_MEMORY1 );
+        inBias.setName(NAME_IN_BIAS);
+        inFoodValuePosition.setName(NAME_IN_FOOD_VALUE_POSITION);
+        inFoodValueFeeler.setName(NAME_IN_FOOD_VALUE_FEELER);
+        inOcclusionFeeler.setName(NAME_IN_OCCLUSION_FEELER);
+        inEnergy.setName(NAME_IN_ENERGY);
+        inAge.setName(NAME_IN_AGE);
+        inGeneticDifference.setName(NAME_IN_GENETIC_DIFFERENCE);
+        inWasAttacked.setName(NAME_IN_WAS_ATTACKED);
+        inWaterOnFeeler.setName(NAME_IN_WATER_ON_FEELER);
+        inWaterOnCreature.setName(NAME_IN_WATER_ON_CREATURE);
+        inMemory1.setName(NAME_IN_MEMORY1);
 
-        this.outBirth.setName( this.NAME_OUT_BIRTH );
-        this.outRotate.setName( this.NAME_OUT_ROTATE );
-        this.outForward.setName( this.NAME_OUT_FORWARD );
-        this.outFeelerAngle.setName( this.NAME_OUT_FEELER_ANGLE );
-        this.outAttack.setName( this.NAME_OUT_ATTACK );
-        this.outEat.setName( this.NAME_OUT_EAT );
-        this.outMemory1.setName( this.NAME_OUT_MEMORY1 );
+        outBirth.setName(NAME_OUT_BIRTH);
+        outRotate.setName(NAME_OUT_ROTATE);
+        outForward.setName(NAME_OUT_FORWARD);
+        outFeelerAngle.setName(NAME_OUT_FEELER_ANGLE);
+        outAttack.setName(NAME_OUT_ATTACK);
+        outEat.setName(NAME_OUT_EAT);
+        outMemory1.setName(NAME_OUT_MEMORY1);
 
         this.brain = new NeuralNetwork();
 
-        this.brain.addInputNeuron( this.inBias );
-        this.brain.addInputNeuron( this.inFoodValuePosition );
-        this.brain.addInputNeuron( this.inFoodValueFeeler );
-        this.brain.addInputNeuron( this.inOcclusionFeeler );
-        this.brain.addInputNeuron( this.inEnergy );
-        this.brain.addInputNeuron( this.inAge );
-        this.brain.addInputNeuron( this.inGeneticDifference );
-        this.brain.addInputNeuron( this.inWasAttacked );
-        this.brain.addInputNeuron( this.inWaterOnFeeler );
-        this.brain.addInputNeuron( this.inWaterOnCreature );
-        this.brain.addInputNeuron( this.inMemory1 );
+        brain.addInputNeuron(inBias);
+        brain.addInputNeuron(inFoodValuePosition);
+        brain.addInputNeuron(inFoodValueFeeler);
+        brain.addInputNeuron(inOcclusionFeeler);
+        brain.addInputNeuron(inEnergy);
+        brain.addInputNeuron(inAge);
+        brain.addInputNeuron(inGeneticDifference);
+        brain.addInputNeuron(inWasAttacked);
+        brain.addInputNeuron(inWaterOnFeeler);
+        brain.addInputNeuron(inWaterOnCreature);
+        brain.addInputNeuron(inMemory1);
 
-        this.brain.generateHiddenNeurons( 10 );
+        brain.generateHiddenNeurons(10);
 
-        this.brain.addOutputNeuron( this.outBirth );
-        this.brain.addOutputNeuron( this.outRotate );
-        this.brain.addOutputNeuron( this.outForward );
-        this.brain.addOutputNeuron( this.outFeelerAngle );
-        this.brain.addOutputNeuron( this.outAttack );
-        this.brain.addOutputNeuron( this.outEat );
-        this.brain.addOutputNeuron( this.outMemory1 );
+        brain.addOutputNeuron(outBirth);
+        brain.addOutputNeuron(outRotate);
+        brain.addOutputNeuron(outForward);
+        brain.addOutputNeuron(outFeelerAngle);
+        brain.addOutputNeuron(outAttack);
+        brain.addOutputNeuron(outEat);
+        brain.addOutputNeuron(outMemory1);
 
-        this.brain.generateFullMesh();
+        brain.generateFullMesh();
 
-        this.brain.randomizeAllWeights();
-        this.calculateFeelerPosition();
+        brain.randomizeAllWeights();
+        calculateFeelerPosition();
 
-        this.color = new Color( (float) MathUtil.random.nextDouble(), (float) MathUtil.random.nextDouble(), (float) MathUtil.random.nextDouble() );
+        color = new Color((float) MathUtil.random.nextDouble(), (float) MathUtil.random.nextDouble(), (float) MathUtil.random.nextDouble());
     }
 
-    public Creature( Level level, Creature mother ) {
-        this.id = currentId++;
+    public Creature(Level level, Creature mother) {
+        id = currentId++;
 
         this.level = level;
         this.mother = mother;
-        this.generation = mother.generation + 1;
-        if ( this.generation > maximumGeneration ) {
-            maximumGeneration = this.generation;
+        generation = mother.generation + 1;
+        if(generation > maximumGeneration) {
+            maximumGeneration = generation;
         }
-        this.x = mother.x;
-        this.y = mother.y;
-        this.viewAngle = (float) ( MathUtil.random.nextDouble() * MathUtil.PI * 2 );
+        x = mother.x;
+        y = mother.y;
+        viewAngle = (float) (MathUtil.random.nextDouble() * MathUtil.PI * 2);
         try {
-            this.brain = mother.brain.cloneFullMesh();
-        } catch ( Exception e ) {
+            brain = mother.brain.cloneFullMesh();
+        } catch(Exception e) {
             e.printStackTrace();
         }
 
-        this.inBias = this.brain.getInputNeuronFromName( this.NAME_IN_BIAS );
-        this.inFoodValuePosition = this.brain.getInputNeuronFromName( this.NAME_IN_FOOD_VALUE_POSITION );
-        this.inFoodValueFeeler = this.brain.getInputNeuronFromName( this.NAME_IN_FOOD_VALUE_FEELER );
-        this.inOcclusionFeeler = this.brain.getInputNeuronFromName( this.NAME_IN_OCCLUSION_FEELER );
-        this.inEnergy = this.brain.getInputNeuronFromName( this.NAME_IN_ENERGY );
-        this.inAge = this.brain.getInputNeuronFromName( this.NAME_IN_AGE );
-        this.inGeneticDifference = this.brain.getInputNeuronFromName( this.NAME_IN_GENETIC_DIFFERENCE );
-        this.inWasAttacked = this.brain.getInputNeuronFromName( this.NAME_IN_WAS_ATTACKED );
-        this.inWaterOnFeeler = this.brain.getInputNeuronFromName( this.NAME_IN_WATER_ON_FEELER );
-        this.inWaterOnCreature = this.brain.getInputNeuronFromName( this.NAME_IN_WATER_ON_CREATURE );
-        this.inMemory1 = this.brain.getInputNeuronFromName( this.NAME_IN_MEMORY1 );
+        inBias = brain.getInputNeuronFromName(NAME_IN_BIAS);
+        inFoodValuePosition = brain.getInputNeuronFromName(NAME_IN_FOOD_VALUE_POSITION);
+        inFoodValueFeeler = brain.getInputNeuronFromName(NAME_IN_FOOD_VALUE_FEELER);
+        inOcclusionFeeler = brain.getInputNeuronFromName(NAME_IN_OCCLUSION_FEELER);
+        inEnergy = brain.getInputNeuronFromName(NAME_IN_ENERGY);
+        inAge = brain.getInputNeuronFromName(NAME_IN_AGE);
+        inGeneticDifference = brain.getInputNeuronFromName(NAME_IN_GENETIC_DIFFERENCE);
+        inWasAttacked = brain.getInputNeuronFromName(NAME_IN_WAS_ATTACKED);
+        inWaterOnFeeler = brain.getInputNeuronFromName(NAME_IN_WATER_ON_FEELER);
+        inWaterOnCreature = brain.getInputNeuronFromName(NAME_IN_WATER_ON_CREATURE);
+        inMemory1 = brain.getInputNeuronFromName(NAME_IN_MEMORY1);
 
-        this.outBirth = this.brain.getOutputNeuronFromName( this.NAME_OUT_BIRTH );
-        this.outRotate = this.brain.getOutputNeuronFromName( this.NAME_OUT_ROTATE );
-        this.outForward = this.brain.getOutputNeuronFromName( this.NAME_OUT_FORWARD );
-        this.outFeelerAngle = this.brain.getOutputNeuronFromName( this.NAME_OUT_FEELER_ANGLE );
-        this.outAttack = this.brain.getOutputNeuronFromName( this.NAME_OUT_ATTACK );
-        this.outEat = this.brain.getOutputNeuronFromName( this.NAME_OUT_EAT );
-        this.outMemory1 = this.brain.getOutputNeuronFromName( this.NAME_OUT_MEMORY1 );
+        outBirth = brain.getOutputNeuronFromName(NAME_OUT_BIRTH);
+        outRotate = brain.getOutputNeuronFromName(NAME_OUT_ROTATE);
+        outForward = brain.getOutputNeuronFromName(NAME_OUT_FORWARD);
+        outFeelerAngle = brain.getOutputNeuronFromName(NAME_OUT_FEELER_ANGLE);
+        outAttack = brain.getOutputNeuronFromName(NAME_OUT_ATTACK);
+        outEat = brain.getOutputNeuronFromName(NAME_OUT_EAT);
+        outMemory1 = brain.getOutputNeuronFromName(NAME_OUT_MEMORY1);
 
-        this.calculateFeelerPosition();
-        this.mutateConnections();
+        calculateFeelerPosition();
+        mutateConnections();
 
         float r = mother.color.getRed() / 255f;
         float g = mother.color.getGreen() / 255f;
         float b = mother.color.getBlue() / 255f;
 
-        this.color = new Color( r, g, b );
+        color = new Color(r, g, b);
     }
 
     private void mutateConnections() {
-        for ( int i = 0; i < 7; i++ ) {
-            this.brain.randomMutation( 0.1f );
+        for(int i = 0; i < 7; i++) {
+            brain.randomMutation(0.1f);
         }
     }
 
     public void readSensors() {
-        this.inMemory1.setValue( this.outMemory1.getValue() );
+        inMemory1.setValue(outMemory1.getValue());
 
-        this.brain.invalidate();
+        brain.invalidate();
 
-        Tile creatureTile = this.level.getTile( (int) this.x / 16, (int) this.y / 16 );
-        Tile feelerTile = this.level.getTile( (int) this.feelerX / 16, (int) this.feelerY / 16 );
+        Tile creatureTile = level.getTile((int) x / 16, (int) y / 16);
+        Tile feelerTile = level.getTile((int) feelerX / 16, (int) feelerY / 16);
 
-        this.inBias.setValue( 1f );
-        if ( this.x / 16 > 0 && this.x / 16 <= this.level.width && this.y / 16 > 0 && this.y / 16 <= this.level.height ) {
-            this.inFoodValuePosition.setValue( this.level.foodValues[(int) ( this.x / 16 )][(int) ( this.y / 16 )] / this.level.MAXIMUM_FOOD_PER_TILE );
+        inBias.setValue(1f);
+        if(x / 16 > 0 && x / 16 <= level.width && y / 16 > 0 && y / 16 <= level.height) {
+            inFoodValuePosition.setValue(level.foodValues[(int) (x / 16)][(int) (y / 16)] / level.MAXIMUM_FOOD_PER_TILE);
         } else {
-            this.inFoodValuePosition.setValue( 0f );
+            inFoodValuePosition.setValue(0f);
         }
-        if ( this.feelerX / 16 > 0 && this.feelerX / 16 <= this.level.width && this.feelerY / 16 > 0 && this.feelerY / 16 <= this.level.height ) {
-            this.inFoodValueFeeler.setValue( this.level.foodValues[(int) ( this.x / 16 )][(int) ( this.y / 16 )] / this.level.MAXIMUM_FOOD_PER_TILE );
+        if(feelerX / 16 > 0 && feelerX / 16 <= level.width && feelerY / 16 > 0 && feelerY / 16 <= level.height) {
+            inFoodValueFeeler.setValue(level.foodValues[(int) (x / 16)][(int) (y / 16)] / level.MAXIMUM_FOOD_PER_TILE);
         } else {
-            this.inFoodValueFeeler.setValue( 0f );
+            inFoodValueFeeler.setValue(0f);
         }
-        this.inOcclusionFeeler.setValue( 0f );
-        this.inEnergy.setValue( ( this.energy - this.MINIMUM_SURVIVAL_ENERGY ) / ( this.START_ENERGY - this.MINIMUM_SURVIVAL_ENERGY ) );
-        this.inAge.setValue( this.age / 10f );
-        this.inGeneticDifference.setValue( 0f );
-        this.inWasAttacked.setValue( 0f );
-        this.inWaterOnFeeler.setValue( feelerTile.isGrass() ? 0f : 1f );
-        this.inWaterOnCreature.setValue( creatureTile.isGrass() ? 0f : 1f );
+        inOcclusionFeeler.setValue(0f);
+        inEnergy.setValue((energy - MINIMUM_SURVIVAL_ENERGY) / (START_ENERGY - MINIMUM_SURVIVAL_ENERGY));
+        inAge.setValue(age / 10f);
+        inGeneticDifference.setValue(0f);
+        inWasAttacked.setValue(0f);
+        inWaterOnFeeler.setValue(feelerTile.isGrass() ? 0f : 1f);
+        inWaterOnCreature.setValue(creatureTile.isGrass() ? 0f : 1f);
     }
 
     public void act() {
-        Tile tile = this.level.getTile( (int) this.x / 16, (int) this.y / 16 );
-        float costMult = this.calculateCostMultiplier( tile );
-        this.actRotate( costMult );
-        this.actMove( costMult );
-        this.actBirth();
-        this.actFeelerRotate();
-        this.actEat( costMult, tile );
+        Tile tile = level.getTile((int) x / 16, (int) y / 16);
+        float costMult = calculateCostMultiplier(tile);
+        actRotate(costMult);
+        actMove(costMult);
+        actBirth();
+        actFeelerRotate();
+        actEat(costMult, tile);
 
-        this.age += this.level.TIME_PER_TICK;
+        age += level.TIME_PER_TICK;
 
-        if ( this.age > oldestCreatureEver.age ) {
+        if(age > oldestCreatureEver.age) {
             oldestCreatureEver = this;
         }
 
-        if ( this.energy < 100 || Float.isNaN( this.energy ) ) {
-            this.kill( tile );
+        if(energy < 100 || Float.isNaN(energy)) {
+            kill(tile);
         }
     }
 
-    private void kill( Tile tile ) {
-        if ( tile.isGrass() ) {
-            if ( this.x / 16 > 0 && this.x / 16 <= this.level.width && this.y / 16 > 0 && this.y / 16 <= this.level.height ) {
-                this.level.foodValues[(int) ( this.x / 16 )][(int) ( this.y / 16 )] += this.energy * this.FOOD_DROP_PERCENTAGE;
+    private void kill(Tile tile) {
+        if(tile.isGrass()) {
+            if(x / 16 > 0 && x / 16 <= level.width && y / 16 > 0 && y / 16 <= level.height) {
+                level.foodValues[(int) (x / 16)][(int) (y / 16)] += energy * FOOD_DROP_PERCENTAGE;
             }
         }
-        this.level.creatureFactory.removeCreature( this );
+        level.creatureFactory.removeCreature(this);
     }
 
-    private void actRotate( float costMult ) {
-        float rotateForce = MathUtil.clampNegativePosition( this.outRotate.getValue() );
-        this.viewAngle += rotateForce / 10;
-        this.energy -= MathUtil.abs( rotateForce * this.COST_ROTATE * costMult );
+    private void actRotate(float costMult) {
+        float rotateForce = MathUtil.clampNegativePosition(outRotate.getValue());
+        viewAngle += rotateForce / 10;
+        energy -= MathUtil.abs(rotateForce * COST_ROTATE * costMult);
     }
 
-    private void actMove( float costMult ) {
-        float forwardX = MathUtil.sin( this.viewAngle ) * this.MOVE_SPEED;
-        float forwardY = MathUtil.cos( this.viewAngle ) * this.MOVE_SPEED;
-        float forwardForce = MathUtil.clampNegativePosition( this.outForward.getValue() );
+    private void actMove(float costMult) {
+        float forwardX = MathUtil.sin(viewAngle) * MOVE_SPEED;
+        float forwardY = MathUtil.cos(viewAngle) * MOVE_SPEED;
+        float forwardForce = MathUtil.clampNegativePosition(outForward.getValue());
         forwardX *= forwardForce;
         forwardY *= forwardForce;
-        this.x += forwardX;
-        this.y += forwardY;
-        this.energy -= MathUtil.abs( forwardForce * this.COST_WALK * costMult );
+        x += forwardX;
+        y += forwardY;
+        energy -= MathUtil.abs(forwardForce * COST_WALK * costMult);
     }
 
     private void actBirth() {
-        float birthWish = this.outBirth.getValue();
-        if ( birthWish > 0 ) {
-            this.tryToGiveBirth();
+        float birthWish = outBirth.getValue();
+        if(birthWish > 0) {
+            tryToGiveBirth();
         }
     }
 
     private void actFeelerRotate() {
-        this.feelerAngle = MathUtil.clampNegativePosition( this.outFeelerAngle.getValue() ) * MathUtil.PI;
-        this.calculateFeelerPosition();
+        feelerAngle = MathUtil.clampNegativePosition(outFeelerAngle.getValue()) * MathUtil.PI;
+        calculateFeelerPosition();
     }
 
-    private void actEat( float costMult, Tile creatureTile ) {
-        float eatWish = MathUtil.clamp( this.outEat.getValue() );
-        if ( eatWish > 0 ) {
-            this.eat( eatWish, creatureTile );
-            this.energy -= eatWish * this.COST_EAT * costMult;
+    private void actEat(float costMult, Tile creatureTile) {
+        float eatWish = MathUtil.clamp(outEat.getValue());
+        if(eatWish > 0) {
+            eat(eatWish, creatureTile);
+            energy -= eatWish * COST_EAT * costMult;
         }
     }
 
-    private void eat( float eatWish, Tile tile ) {
-        if ( this.x / 16 > 0 && this.x / 16 <= this.level.width && this.y / 16 > 0 && this.y / 16 <= this.level.height ) {
-            if ( tile.isGrass() ) {
-                float foodValue = this.level.foodValues[(int) this.x / 16][(int) this.y / 16];
-                if ( foodValue > 0 ) {
-                    if ( foodValue > this.GAIN_EAT * eatWish ) {
-                        this.energy += this.GAIN_EAT * eatWish;
-                        this.level.foodValues[(int) this.x / 16][(int) this.y / 16] -= this.GAIN_EAT;
+    private void eat(float eatWish, Tile tile) {
+        if(x / 16 > 0 && x / 16 <= level.width && y / 16 > 0 && y / 16 <= level.height) {
+            if(tile.isGrass()) {
+                float foodValue = level.foodValues[(int) x / 16][(int) y / 16];
+                if(foodValue > 0) {
+                    if(foodValue > GAIN_EAT * eatWish) {
+                        energy += GAIN_EAT * eatWish;
+                        level.foodValues[(int) x / 16][(int) y / 16] -= GAIN_EAT;
                     } else {
-                        this.energy += foodValue;
-                        this.level.foodValues[(int) this.x / 16][(int) this.y / 16] = 0;
+                        energy += foodValue;
+                        level.foodValues[(int) x / 16][(int) y / 16] = 0;
                     }
                 }
             }
@@ -326,36 +326,36 @@ public abstract class Creature {
     }
 
     private void tryToGiveBirth() {
-        if ( this.isAbleToGiveBirth() ) {
-            this.giveBirth();
+        if(isAbleToGiveBirth()) {
+            giveBirth();
         }
     }
 
     private void giveBirth() {
-        Creature child = new TestCreature( this.level, this );
-        this.children.add( child );
-        this.level.creatureFactory.addCreature( new TestCreature( this.level, this ) );
-        this.energy -= this.START_ENERGY;
+        Creature child = new TestCreature(level, this);
+        children.add(child);
+        level.creatureFactory.addCreature(new TestCreature(level, this));
+        energy -= START_ENERGY;
     }
 
     private boolean isAbleToGiveBirth() {
-        return this.energy > this.START_ENERGY + this.MINIMUM_SURVIVAL_ENERGY * 1.1f;
+        return energy > START_ENERGY + MINIMUM_SURVIVAL_ENERGY * 1.1f;
     }
 
     private void calculateFeelerPosition() {
-        float angle = this.feelerAngle + this.viewAngle;
-        float x = MathUtil.sin( angle ) * 12;
-        float y = MathUtil.cos( angle ) * 12;
-        this.feelerX = this.x + x;
-        this.feelerY = this.y + y;
+        float angle = feelerAngle + viewAngle;
+        float x = MathUtil.sin(angle) * 12;
+        float y = MathUtil.cos(angle) * 12;
+        feelerX = this.x + x;
+        feelerY = this.y + y;
     }
 
-    private float calculateCostMultiplier( Tile creatureTile ) {
-        return this.age * ( creatureTile.isGrass() ? 1 : 2 );
+    private float calculateCostMultiplier(Tile creatureTile) {
+        return age * (creatureTile.isGrass() ? 1 : 2);
     }
 
     public abstract void update();
 
-    public abstract void render( Graphics g, int xOffset, int yOffset );
+    public abstract void render(Graphics g, int xOffset, int yOffset);
 
 }
