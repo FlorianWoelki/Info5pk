@@ -50,7 +50,7 @@ public class Level {
         }
     }
 
-    public void render(Graphics g, int xOffset, int yOffset, float mouseWheelScale) {
+    public void render(Graphics g, int xOffset, int yOffset, float mouseWheelScale, boolean isF3) {
         for(int y = 0; y < height; y++) {
             for(int x = 0; x < width; x++) {
                 Tile tile = getTile(x, y);
@@ -73,7 +73,7 @@ public class Level {
             }
         }
 
-        creatureFactory.render(g, xOffset, yOffset, mouseWheelScale);
+        creatureFactory.render(g, xOffset, yOffset, mouseWheelScale, isF3);
     }
 
     public void update() {

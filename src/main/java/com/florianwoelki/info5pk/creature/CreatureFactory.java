@@ -47,14 +47,15 @@ public class CreatureFactory {
         toRemoveCreatures.add(creature);
     }
 
-    public void render(Graphics g, int xOffset, int yOffset, float mouseWheelScale) {
+    public void render(Graphics g, int xOffset, int yOffset, float mouseWheelScale, boolean isF3) {
         for(Creature creature : creatures) {
             creature.mouseWheelScale = mouseWheelScale;
             creature.render(g, xOffset, yOffset);
-
         }
 
-        this.renderGeneralStats(g);
+        if(isF3) {
+            this.renderGeneralStats(g);
+        }
     }
 
     private void renderGeneralStats(Graphics g) {

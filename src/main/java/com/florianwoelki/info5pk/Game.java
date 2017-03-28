@@ -127,7 +127,7 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, getWidth(), getHeight());
-        level.render(g, x, y, mouse.getMouseWheelScale());
+        level.render(g, x, y, mouse.getMouseWheelScale(), keyboard.f3);
         g.dispose();
         bs.show();
     }
