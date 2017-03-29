@@ -8,44 +8,81 @@ import java.awt.event.KeyListener;
  */
 public class Keyboard implements KeyListener {
 
-    private boolean[] keys = new boolean[120];
-    private boolean[] pkeys = new boolean[120];
-    public boolean up, down, left, right;
-    public boolean f3;
+    private static boolean[] keys;
+    private static boolean[] pkeys;
 
-    public void update() {
-        up = keys[KeyEvent.VK_UP] || keys[KeyEvent.VK_W];
-        down = keys[KeyEvent.VK_DOWN] || keys[KeyEvent.VK_S];
-        left = keys[KeyEvent.VK_LEFT] || keys[KeyEvent.VK_A];
-        right = keys[KeyEvent.VK_RIGHT] || keys[KeyEvent.VK_D];
-        f3 = keys[KeyEvent.VK_F3];
+    private static final int NUM_KEYS = 5;
+    public static final int UP = 0;
+    public static final int LEFT = 1;
+    public static final int DOWN = 2;
+    public static final int RIGHT = 3;
+    public static final int F3 = 4;
 
-        for(int i = 0; i < keys.length; i++) {
+    static {
+        keys = new boolean[NUM_KEYS];
+        pkeys = new boolean[NUM_KEYS];
+    }
+
+    public static void update() {
+        for(int i = 0; i < NUM_KEYS; i++) {
             pkeys[i] = keys[i];
         }
     }
 
+    public static void setKey(int k, boolean b) {
+        keys[k] = b;
+    }
+
+    public static boolean isDown(int k) {
+        return keys[k];
+    }
+
+    public static boolean isPressed(int k) {
+        return keys[k] && !pkeys[k];
+    }
+
     @Override
     public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode() < keys.length) {
-            keys[e.getKeyCode()] = true;
+        int keyCode = e.getKeyCode();
+        if(keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) {
+            setKey(UP, true);
+        }
+        if(keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT) {
+            setKey(LEFT, true);
+        }
+        if(keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN) {
+            setKey(DOWN, true);
+        }
+        if(keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT) {
+            setKey(RIGHT, true);
+        }
+        if(keyCode == KeyEvent.VK_F3) {
+            setKey(F3, true);
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if(f3) {
-            f3 = false;
+        int keyCode = e.getKeyCode();
+        if(keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) {
+            setKey(UP, false);
         }
-
-        if(e.getKeyCode() < keys.length) {
-            keys[e.getKeyCode()] = false;
+        if(keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT) {
+            setKey(LEFT, false);
+        }
+        if(keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN) {
+            setKey(DOWN, false);
+        }
+        if(keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT) {
+            setKey(RIGHT, false);
+        }
+        if(keyCode == KeyEvent.VK_F3) {
+            setKey(F3, false);
         }
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-        pkeys[e.getKeyCode()] = true;
     }
 
 }

@@ -13,7 +13,6 @@ import java.awt.image.BufferStrategy;
 public class Game extends Canvas implements Runnable {
 
     private Window window;
-    private Keyboard keyboard;
     private Mouse mouse;
 
     private Thread thread;
@@ -21,13 +20,14 @@ public class Game extends Canvas implements Runnable {
 
     private Level level;
 
+    private boolean isF3;
+
     public Game() {
-        keyboard = new Keyboard();
         mouse = new Mouse();
 
         requestFocus();
         setFocusable(true);
-        addKeyListener(keyboard);
+        addKeyListener(new Keyboard());
         addMouseListener(mouse);
         addMouseMotionListener(mouse);
         addMouseWheelListener(mouse);
@@ -97,17 +97,20 @@ public class Game extends Canvas implements Runnable {
 
     private void update() {
         level.update();
-        keyboard.update();
 
-        if(keyboard.right) {
+        if(Keyboard.isDown(Keyboard.RIGHT)) {
             x--;
-        } else if(keyboard.left) {
+        } else if(Keyboard.isDown(Keyboard.LEFT)) {
             x++;
-        } else if(keyboard.up) {
+        } else if(Keyboard.isDown(Keyboard.UP)) {
             y++;
-        } else if(keyboard.down) {
+        } else if(Keyboard.isDown(Keyboard.DOWN)) {
             y--;
+        } else if(Keyboard.isPressed(Keyboard.F3)) {
+            isF3 = !isF3;
         }
+
+        Keyboard.update();
     }
 
     int x = 0;
@@ -123,7 +126,7 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, getWidth(), getHeight());
-        level.render(g, x, y, mouse.getMouseWheelScale(), keyboard.f3);
+        level.render(g, x, y, mouse.getMouseWheelScale(), isF3);
         g.dispose();
         bs.show();
     }
