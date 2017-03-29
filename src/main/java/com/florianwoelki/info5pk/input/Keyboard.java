@@ -27,10 +27,6 @@ public class Keyboard implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if(f3) {
-            return;
-        }
-
         if(e.getKeyCode() < keys.length) {
             keys[e.getKeyCode()] = true;
         }
@@ -39,8 +35,7 @@ public class Keyboard implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         if(f3) {
-            pkeys[e.getKeyCode()] = false;
-            return;
+            f3 = false;
         }
 
         if(e.getKeyCode() < keys.length) {

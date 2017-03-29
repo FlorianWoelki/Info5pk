@@ -67,7 +67,6 @@ public class Game extends Canvas implements Runnable {
         int fps = 0, ups = 0;
 
         while(isRunning) {
-            boolean shouldRender = false;
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
             lastTime = now;
@@ -75,19 +74,16 @@ public class Game extends Canvas implements Runnable {
                 delta--;
                 update();
                 ups++;
-                shouldRender = true;
             }
 
             try {
-                Thread.sleep(3);
+                Thread.sleep(1);
             } catch(InterruptedException e) {
                 e.printStackTrace();
             }
 
-            if(shouldRender) {
-                render();
-                fps++;
-            }
+            render();
+            fps++;
 
             if(System.currentTimeMillis() - lastTimer > 1000) {
                 lastTimer += 1000;
